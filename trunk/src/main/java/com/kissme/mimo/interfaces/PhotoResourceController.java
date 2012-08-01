@@ -65,7 +65,7 @@ public class PhotoResourceController extends ControllerSupport {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/list/", params = { "!async" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/list/", method = RequestMethod.GET)
 	public String list(Page<ResourceObject> page, @RequestParam(value = "pathname", required = false) String pathname, Model model) {
 		Conf conf = confOnWeb.wrap(confsRepository.getConf());
 
@@ -74,7 +74,7 @@ public class PhotoResourceController extends ControllerSupport {
 		return "photo-resource/list";
 	}
 
-	@RequestMapping(value = "/list/", params = { "async" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/list/", method = RequestMethod.POST)
 	@ResponseBody
 	public Page<ResourceObject> list(Page<ResourceObject> page, @RequestParam(value = "pathname", required = false) String pathname,
 			@RequestHeader("X-Requested-With") String requestedWith, Model model) {
