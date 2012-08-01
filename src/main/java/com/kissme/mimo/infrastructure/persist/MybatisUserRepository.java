@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.kissme.core.orm.mybatis.MybatisRepositorySupport;
-import com.kissme.lang.Lang;
 import com.kissme.mimo.domain.security.User;
 import com.kissme.mimo.domain.security.UserRepository;
 
@@ -40,8 +39,8 @@ public class MybatisUserRepository extends MybatisRepositorySupport<String, User
 				}
 
 			});
-		} catch (Exception e) {
-			throw Lang.uncheck(e);
+		} catch (Exception ignore) {
+			return null;
 		}
 	}
 
