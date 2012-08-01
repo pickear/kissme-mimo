@@ -45,7 +45,7 @@
 </td>
 </tr>
 <tr>
-<td width="240" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>邮件接收用户：</td>
+<td width="240" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>邮件接收用户（多个用户请用;分开）：</td>
 <td colspan="2">
 	<form:textarea path="receivers" cssClass="input5 fontMar" style="margin-top: 2px; margin-bottom: 2px; height: 80px; margin-left: 2px; margin-right: 2px; width: 318px;"  />
 </td>
@@ -53,7 +53,30 @@
 <tr>
 <td width="240" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>监听以下事件：</td>
 <td colspan="2">
-	<form:textarea path="events" cssClass="input5 fontMar" style="margin-top: 2px; margin-bottom: 2px; height: 80px; margin-left: 2px; margin-right: 2px; width: 318px;"  />
+	<form:checkbox path="events" value="创建用户"  label="创建用户"/>
+	<form:checkbox path="events" value="修改用户"  label="修改用户"/>
+	<form:checkbox path="events" value="删除用户"  label="删除用户"/>
+	<form:checkbox path="events" value="创建角色"  label="创建角色"/>
+	<form:checkbox path="events" value="修改角色"  label="修改角色"/>
+	<form:checkbox path="events" value="删除角色"  label="删除角色"/>
+	<form:checkbox path="events" value="创建权限"  label="创建权限"/>
+	<form:checkbox path="events" value="修改权限"  label="修改权限"/>
+	<form:checkbox path="events" value="删除权限"  label="删除权限"/>
+	<form:checkbox path="events" value="创建栏目"  label="创建栏目"/>
+	<form:checkbox path="events" value="修改栏目"  label="修改栏目"/>
+	<form:checkbox path="events" value="删除栏目"  label="删除栏目"/>
+	<form:checkbox path="events" value="创建模版"  label="创建模版"/>
+	<form:checkbox path="events" value="修改模版"  label="修改模版"/>
+	<form:checkbox path="events" value="删除模版"  label="删除模版"/>
+	<form:checkbox path="events" value="创建文章"  label="创建文章"/>
+	<form:checkbox path="events" value="修改文章"  label="修改文章"/>
+	<form:checkbox path="events" value="删除文章"  label="删除文章"/>
+	<form:checkbox path="events" value="创建文章评论"  label="创建文章评论"/>
+	<form:checkbox path="events" value="修改文章评论"  label="修改文章评论"/>
+	<form:checkbox path="events" value="删除文章评论"  label="删除文章评论"/>
+	<form:checkbox path="events" value="创建留言"  label="创建留言"/>
+	<form:checkbox path="events" value="修改留言"  label="修改留言"/>
+	<form:checkbox path="events" value="删除留言"  label="删除留言"/>
 </td>
 </tr>
 </tbody>
