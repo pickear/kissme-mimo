@@ -61,12 +61,14 @@ public class GuestbookServiceImpl extends LifecycleEventHandler implements Guest
 	}
 
 	@Override
+	@Monitoring(action = "修改留言")
 	protected void onModify(LifecycleEvent event) {
 		Guestbook entity = (Guestbook) event.getSource();
 		guestbookRepository.update(preventMaliciousAndMarkQuality(entity));
 	}
 
 	@Override
+	@Monitoring(action = "删除留言")
 	protected void onDelete(LifecycleEvent event) {
 		Guestbook entity = (Guestbook) event.getSource();
 		guestbookRepository.delete(entity);
