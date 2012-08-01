@@ -45,7 +45,7 @@
 </td>
 </tr>
 <tr>
-<td width="240" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>邮件接收用户（多个用户请用;分开）：</td>
+<td width="240" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>邮件接收用户（多个用户请用；分开）：</td>
 <td colspan="2">
 	<form:textarea path="receivers" cssClass="input5 fontMar" style="margin-top: 2px; margin-bottom: 2px; height: 80px; margin-left: 2px; margin-right: 2px; width: 318px;"  />
 </td>
