@@ -11,11 +11,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -186,7 +189,7 @@ public class ChannelController extends CrudControllerSupport<String, Channel> {
 
 	@Override
 	@RequestMapping(value = "/channel/create/", method = POST)
-	public String create(Channel entity, BindingResult result) {
+	public String create(@Valid Channel entity, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return null;
@@ -217,7 +220,7 @@ public class ChannelController extends CrudControllerSupport<String, Channel> {
 			entity.modify();
 			success("栏目修改成功");
 		} catch (Exception e) {
-			return null;
+			error("修改栏目失败，请核对数据后重试");
 		}
 
 		return REDIRECT_LIST;
@@ -280,4 +283,12 @@ public class ChannelController extends CrudControllerSupport<String, Channel> {
 		return "channel";
 	}
 
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
+	}
 }

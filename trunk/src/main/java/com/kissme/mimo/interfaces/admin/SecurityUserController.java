@@ -8,12 +8,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +72,7 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 
 	@Override
 	@RequestMapping(value = "/create/", method = POST)
-	public String create(User entity, BindingResult result) {
+	public String create(@Valid User entity, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
 		}
@@ -111,7 +114,7 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 			entity.modify();
 			success("用户修改成功");
 		} catch (Exception e) {
-			return null;
+			error("修改用户失败，请核对数据后重试");
 		}
 
 		return REDIRECT_LIST;
@@ -206,5 +209,14 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 	@Override
 	protected String getViewPackage() {
 		return "security/user";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 }

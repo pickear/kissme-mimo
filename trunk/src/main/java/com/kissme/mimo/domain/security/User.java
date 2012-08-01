@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Maps;
@@ -24,7 +26,9 @@ public class User extends AbstractLifecycleAwareObject<User> {
 
 	private static final long serialVersionUID = 1L;
 
+	@Size(min = 3, max = 16)
 	private String username;
+	@Size(min = 3, max = 32)
 	private String password;
 	private boolean accountNonLocked = true;
 

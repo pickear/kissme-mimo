@@ -2,6 +2,8 @@ package com.kissme.mimo.domain.article;
 
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
 import com.kissme.core.domain.event.AbstractLifecycleAwareObject;
 import com.kissme.lang.Preconditions;
 import com.kissme.mimo.domain.channel.Channel;
@@ -21,9 +23,13 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 
 	private Channel channel;
 
+	@Size(min = 8, max = 128)
 	private String title;
+	@Size(min = 8, max = 8192)
 	private String content;
+	@Size(max = 255)
 	private String source;
+	@Size(max = 255)
 	private String tags;
 	private int priority;
 

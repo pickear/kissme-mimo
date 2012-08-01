@@ -7,10 +7,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,10 +70,15 @@ public class ArticleCommentController extends ControllerSupport {
 	 */
 	@RequestMapping(value = "/article-comment/create/", method = POST)
 	public Object create(@RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
-								@RequestParam("articleId") String articleId, @RequestParam("captcha") String captcha,
-								ArticleComment entity, HttpSession session) {
+							@RequestParam("articleId") String articleId, @RequestParam("captcha") String captcha,
+							@Valid ArticleComment entity, BindingResult bindingResult,
+							HttpSession session) {
 
 		try {
+
+			if (bindingResult.hasErrors()) {
+				throw new MaliciousRequestException("Bad request!");
+			}
 
 			if (!Webs.isAjax(requestedWith)) {
 				throw new MaliciousRequestException("Bad request!");
@@ -154,5 +163,14 @@ public class ArticleCommentController extends ControllerSupport {
 	@Override
 	protected String getViewPackage() {
 		return "article/comment";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 }

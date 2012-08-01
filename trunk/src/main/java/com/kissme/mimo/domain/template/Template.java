@@ -2,6 +2,9 @@ package com.kissme.mimo.domain.template;
 
 import java.io.File;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.kissme.core.domain.event.AbstractLifecycleAwareObject;
@@ -17,9 +20,12 @@ public class Template extends AbstractLifecycleAwareObject<Template> {
 
 	private static final long serialVersionUID = 1L;
 
+	@Size(min = 3, max = 32)
 	private String name;
 	private String path;
+	@NotNull
 	private String encode;
+	@Size(min = 3, max = 16384)
 	private String content;
 	private long modifyTime;
 
@@ -88,7 +94,7 @@ public class Template extends AbstractLifecycleAwareObject<Template> {
 
 		return this;
 	}
-	
+
 	public Template generate() {
 		Files.write(new File(this.fullPath), getContent(), getEncode());
 		return this;
