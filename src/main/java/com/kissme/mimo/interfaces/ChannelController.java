@@ -192,7 +192,8 @@ public class ChannelController extends CrudControllerSupport<String, Channel> {
 	public String create(@Valid Channel entity, BindingResult result) {
 
 		if (result.hasErrors()) {
-			return null;
+			error("创建栏目失败，请核对数据后重试");
+			return REDIRECT_LIST;
 		}
 
 		entity.create();
