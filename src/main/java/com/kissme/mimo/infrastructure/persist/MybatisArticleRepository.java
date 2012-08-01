@@ -9,7 +9,6 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.kissme.core.orm.Page;
 import com.kissme.core.orm.mybatis.MybatisRepositorySupport;
-import com.kissme.lang.Lang;
 import com.kissme.mimo.domain.article.Article;
 import com.kissme.mimo.domain.article.ArticleRepository;
 
@@ -35,8 +34,8 @@ public class MybatisArticleRepository extends MybatisRepositorySupport<String, A
 				}
 
 			});
-		} catch (Exception e) {
-			throw Lang.uncheck(e);
+		} catch (Exception ignore) {
+			return null;
 		}
 	}
 
