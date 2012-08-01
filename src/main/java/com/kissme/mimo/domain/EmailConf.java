@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.collect.Sets;
+import com.kissme.lang.Lang;
 
 /**
  * 
@@ -23,7 +24,7 @@ public class EmailConf implements Serializable {
 	private String password;
 
 	private String receivers;
-	private String events;
+	private String[] events;
 
 	public String getSmtpServer() {
 		return smtpServer;
@@ -74,16 +75,22 @@ public class EmailConf implements Serializable {
 		return Sets.newHashSet(asList);
 	}
 
-	public String getEvents() {
+	public String[] getEvents() {
 		return events;
 	}
 
-	public void setEvents(String events) {
+	public void setEvents(String[] events) {
 		this.events = events;
 	}
 
 	public boolean supportEvent(String event) {
-		return StringUtils.indexOf(getEvents(), event) != -1;
+		for (String support : Lang.nullSafe(getEvents(), new String[] {})) {
+			if (StringUtils.equalsIgnoreCase(support, event)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 }
