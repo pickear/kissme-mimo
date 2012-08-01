@@ -12,7 +12,6 @@
 <form id="myForm" action="${ctx }/monitoring-record/list/" method="get">
 <div class="chsm"><span>日志管理</span></div>
 <div class="czsrt">
-<span>你可以：</span>
 <span class="dist">名称：</span><input name="params[actor]" value="${page.params.actor}" type="text" /><input class="tjbtn" type="submit" value="提交" />
 </div>
 
@@ -20,7 +19,6 @@
 <div class="rcd_td">
     <table cellpadding="0" cellspacing="0" border="0" class="table">
   <tr>
-  	<th style="border-left:0;" width="5%"><jsp:include page="/WEB-INF/commons/checkall.jsp"></jsp:include>&nbsp;</th>
     <th>操作人</th>
     <th>操作</th>
     <th>来源地址</th>
@@ -32,7 +30,6 @@
   	<c:when test="${not empty page.result }">
   	<c:forEach items="${page.result }" var="monitoringRecord">
   	<tr>
-    <td style="border-left:0;"><input type="checkbox" name="items" id="checkbox" value="${monitoringRecord.id}"/></td>
     <td>${monitoringRecord.actor}&nbsp;</td>
     <td>${monitoringRecord.action }&nbsp;</td>
     <td>${monitoringRecord.source}&nbsp;</td>
@@ -43,7 +40,7 @@
   	</c:forEach>
   	</c:when>
   	<c:otherwise>
-  	<tr><td colspan="7" align="center"><b>暂无内容</b></td></tr>
+  	<tr><td colspan="6" align="center"><b>暂无内容</b></td></tr>
   	</c:otherwise>
   </c:choose>
 </table>

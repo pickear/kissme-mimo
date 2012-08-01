@@ -10,19 +10,21 @@
 				
 		$("#del").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要删除这些内容吗?")){
+			if(items && items.length <=0){
+				alert("请先选择要删除的内容");
+				return false;
+			}
+			
+			if(confirm("你确定要删除这些内容吗?")){
 				
 				$('input[name="_method"]').remove();
 				$("#myForm").attr("action", "${ctx}/channel/delete/")
 							.attr("method","post")
 							.append('<input type="hidden" name="_method" value="DELETE" />')
 							.submit();
-				//加了这句之后 下面那就不在执行
+				
 				return false;
 			}
-			
-			alert("请先选择要删除的内容");
-			return false;
 		});
 });
 </script>
