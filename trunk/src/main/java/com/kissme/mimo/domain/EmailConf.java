@@ -2,6 +2,7 @@ package com.kissme.mimo.domain;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -71,7 +72,12 @@ public class EmailConf implements Serializable {
 	}
 
 	public Set<String> getReceiversSet() {
-		List<String> asList = Arrays.asList(StringUtils.split(getReceivers(), ";"));
+
+		if (StringUtils.isBlank(getReceivers())) {
+			return Collections.emptySet();
+		}
+
+		List<String> asList = Arrays.asList(getReceivers().split(";|；"));
 		return Sets.newHashSet(asList);
 	}
 
@@ -89,7 +95,7 @@ public class EmailConf implements Serializable {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
