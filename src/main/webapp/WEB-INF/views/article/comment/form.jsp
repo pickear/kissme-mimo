@@ -39,7 +39,7 @@
 <tr>
 <td width="150" align="right" nowrap="nowrap">内容：</td>
 <td colspan="2">
-	<form:textarea path="content" rows="30" cols="120" />
+<form:textarea path="content" cssClass="input5 fontMar" style="margin-top: 2px; margin-bottom: 2px; height: 80px; margin-left: 2px; margin-right: 2px; width: 318px;"  />
 </td>
 </tr>
 </tbody>
