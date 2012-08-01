@@ -73,7 +73,7 @@
   	</c:forEach>
   	</c:when>
   	<c:otherwise>
-  	<tr><td colspan="5" align="center"><b>暂无内容</b></td></tr>
+  	<tr><td colspan="7" align="center"><b>暂无内容</b></td></tr>
   	</c:otherwise>
   </c:choose>
 </table>
