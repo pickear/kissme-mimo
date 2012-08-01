@@ -28,7 +28,6 @@ public class User extends AbstractLifecycleAwareObject<User> {
 
 	@Size(min = 3, max = 16)
 	private String username;
-	@Size(min = 3, max = 32)
 	private String password;
 	private boolean accountNonLocked = true;
 
