@@ -128,11 +128,6 @@ public class ResourceServiceImpl implements ResourceService {
 		return ResourceObjectFactory.newResourceObject(file).setFullRelativePath(Files.asUnix(fullRelativePath)).setPath(Files.asUnix(relativePath));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.resource.ResourceService#query(com.mimo.cms.domain.Configure, java.lang.String, com.mimo.core.orm.Page)
-	 */
 	@Override
 	public Page<ResourceObject> query(final Conf conf, final String pathname, final Page<ResourceObject> page) {
 		try {

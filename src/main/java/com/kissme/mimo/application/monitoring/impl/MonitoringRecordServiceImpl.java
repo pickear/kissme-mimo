@@ -23,11 +23,6 @@ public class MonitoringRecordServiceImpl extends LifecycleEventHandler implement
 	@Autowired
 	private MonitoringRecordRepository monitoringRecordRepository;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.monitoring.MonitoringRecordService#queryPage(com.mimo.core.orm.Page)
-	 */
 	@Override
 	public Page<MonitoringRecord> queryPage(Page<MonitoringRecord> page) {
 		return monitoringRecordRepository.queryPage(page);
