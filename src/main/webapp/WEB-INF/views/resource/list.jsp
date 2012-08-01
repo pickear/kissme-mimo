@@ -63,7 +63,7 @@
 </head>
 <body>
 <div class="nrgt">
-<div class="chsm"><span>网站网页资源管理</span></div>
+<div class="chsm"><span>网页文件管理</span></div>
 <div class="czsrt">
 <span  class="dist">当前目录：<c:choose><c:when test="${not empty param.pathname }">${param.pathname }</c:when><c:otherwise>/</c:otherwise> </c:choose> &nbsp;&nbsp;&nbsp;&nbsp;</span>
 <input class="tjbtn" onclick="javascript:history.go(-1);" type="button" value="后退" />
