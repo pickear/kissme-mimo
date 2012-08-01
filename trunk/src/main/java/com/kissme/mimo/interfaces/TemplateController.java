@@ -74,7 +74,8 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 	@RequestMapping(value = "/create/", method = POST)
 	public String create(@Valid Template entity, BindingResult result) {
 		if (result.hasErrors()) {
-			return null;
+			error("创建模版失败，请核对数据后重试");
+			return REDIRECT_LIST;
 		}
 
 		Conf conf = confOnWeb.wrap(confsRepository.getConf());
