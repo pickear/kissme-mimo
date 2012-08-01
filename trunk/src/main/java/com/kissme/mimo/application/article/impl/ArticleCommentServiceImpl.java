@@ -43,7 +43,7 @@ public class ArticleCommentServiceImpl extends LifecycleEventHandler implements 
 	}
 
 	@Override
-	@Monitoring(action = "创建评论")
+	@Monitoring(action = "创建文章评论")
 	protected void onCreate(LifecycleEvent event) {
 		ArticleComment entity = (ArticleComment) event.getSource();
 		articleCommentRepository.save(preventMaliciousAndMarkQuality(entity));
