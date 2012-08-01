@@ -2,7 +2,6 @@ package com.kissme.mimo.domain.channel;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang.StringUtils;
@@ -29,15 +28,14 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	private Template selfTemplate;
 	private Template articleTemplate;
 
-	@NotNull
-	@Size(max = 32)
+	@Size(min = 3, max = 32)
 	private String name;
-	@NotNull
-	@Size(max = 32)
+	@Size(min = 3, max = 32)
 	private String path;
 	@Size(max = 1024)
 	private String about;
 
+	@Size(max = 256)
 	private String title;
 	@Size(max = 256)
 	private String metaKeyword;
