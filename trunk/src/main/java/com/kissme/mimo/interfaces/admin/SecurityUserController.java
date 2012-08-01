@@ -74,7 +74,7 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 			return null;
 		}
 
-		entity.create();
+		entity.encodePassword().create();
 		success("用户创建成功");
 		return REDIRECT_LIST;
 	}
