@@ -8,11 +8,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,7 +46,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@Autowired
 	private TemplateService templateService;
-	
+
 	@Autowired
 	private ConfsRepository confsRepository;
 
@@ -69,7 +72,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@Override
 	@RequestMapping(value = "/create/", method = POST)
-	public String create(Template entity, BindingResult result) {
+	public String create(@Valid Template entity, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
 		}
@@ -100,7 +103,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 			entity.selfAdjusting(conf).modify();
 			success("模板修改成功");
 		} catch (Exception e) {
-			return null;
+			error("修改模版失败，请核对数据后重试");
 		}
 
 		return REDIRECT_LIST;
@@ -150,5 +153,14 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 	@Override
 	protected String getViewPackage() {
 		return "template";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 }

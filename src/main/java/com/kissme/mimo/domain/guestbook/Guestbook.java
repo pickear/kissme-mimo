@@ -1,5 +1,8 @@
 package com.kissme.mimo.domain.guestbook;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import com.kissme.core.domain.event.AbstractLifecycleAwareObject;
 import com.kissme.mimo.infrastructure.safe.annotation.HtmlEscape;
 import com.kissme.mimo.infrastructure.safe.annotation.HtmlEscapeRequired;
@@ -17,12 +20,15 @@ public class Guestbook extends AbstractLifecycleAwareObject<Guestbook> {
 
 	@HtmlEscape
 	@SensitiveWordEscape
+	@Size(min = 6, max = 32)
 	private String author;
 	@HtmlEscape
 	@SensitiveWordEscape
+	@Pattern(regexp = "[0-9a-z\\-\\_A-Z]+@[0-9a-z\\-\\_A-Z]+\\.[a-z]{2,}")
 	private String email;
 	@HtmlEscape
 	@SensitiveWordEscape
+	@Size(min = 6, max = 255)
 	private String content;
 
 	private int status = 1;
@@ -68,7 +74,7 @@ public class Guestbook extends AbstractLifecycleAwareObject<Guestbook> {
 	public boolean isAdmin() {
 		return admin;
 	}
-	
+
 	public Guestbook postByAdmin() {
 		return setAdmin(true);
 	}

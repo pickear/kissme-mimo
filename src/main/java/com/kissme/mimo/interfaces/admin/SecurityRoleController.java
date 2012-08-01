@@ -8,11 +8,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -64,7 +67,7 @@ public class SecurityRoleController extends CrudControllerSupport<String, Role> 
 
 	@Override
 	@RequestMapping(value = "/create/", method = POST)
-	public String create(Role entity, BindingResult result) {
+	public String create(@Valid Role entity, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
 		}
@@ -95,7 +98,7 @@ public class SecurityRoleController extends CrudControllerSupport<String, Role> 
 			entity.modify();
 			success("用户角色修改成功，请刷新该角色关联用户缓存，以使修改生效");
 		} catch (Exception e) {
-			return null;
+			error("用户角色修改失败，请核对数据后重试");
 		}
 
 		return REDIRECT_LIST;
@@ -121,6 +124,15 @@ public class SecurityRoleController extends CrudControllerSupport<String, Role> 
 	@Override
 	protected String getViewPackage() {
 		return "security/role";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 
 }

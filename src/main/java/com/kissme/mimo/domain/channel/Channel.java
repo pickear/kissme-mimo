@@ -2,6 +2,9 @@ package com.kissme.mimo.domain.channel;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Optional;
@@ -26,13 +29,21 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	private Template selfTemplate;
 	private Template articleTemplate;
 
+	@NotNull
+	@Size(max = 32)
 	private String name;
+	@NotNull
+	@Size(max = 32)
 	private String path;
+	@Size(max = 1024)
 	private String about;
 
 	private String title;
+	@Size(max = 256)
 	private String metaKeyword;
+	@Size(max = 256)
 	private String metaTitle;
+	@Size(max = 256)
 	private String metaDescr;
 
 	private int priority;
@@ -99,7 +110,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 		this.articleTemplate = articleTemplate;
 		return this;
 	}
-	
+
 	public String getActualArticleTemplatePath() {
 		Template actual = Optional.fromNullable(articleTemplate).or(selfTemplate);
 		return TemplateHelper.pathWithoutSuffix(actual);

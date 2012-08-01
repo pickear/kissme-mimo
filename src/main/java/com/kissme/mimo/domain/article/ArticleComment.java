@@ -1,5 +1,7 @@
 package com.kissme.mimo.domain.article;
 
+import javax.validation.constraints.Size;
+
 import com.kissme.core.domain.event.AbstractLifecycleAwareObject;
 import com.kissme.mimo.infrastructure.safe.annotation.HtmlEscape;
 import com.kissme.mimo.infrastructure.safe.annotation.HtmlEscapeRequired;
@@ -17,9 +19,11 @@ public class ArticleComment extends AbstractLifecycleAwareObject<ArticleComment>
 	private Article article;
 	@HtmlEscape
 	@SensitiveWordEscape
+	@Size(min = 6, max = 32)
 	private String author;
 	@HtmlEscape
 	@SensitiveWordEscape
+	@Size(min = 6, max = 255)
 	private String content;
 
 	private int status;

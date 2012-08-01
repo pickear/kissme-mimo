@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -119,6 +121,7 @@ public class ArticleController extends ControllerSupport {
 
 	@RequestMapping(value = "/article/create/", params = { "!action" }, method = POST)
 	public String create(Article entity, BindingResult result) {
+
 		entity.create();
 		success("文章创建成功");
 		return REDIRECT_ONLINE_LIST.concat("?params[channel]=").concat(entity.getChannel().getId());
@@ -126,9 +129,10 @@ public class ArticleController extends ControllerSupport {
 
 	@RequestMapping(value = "/article/create/", params = { "action" }, method = POST)
 	public String create(@RequestParam("action") String ingore, Article entity, BindingResult result) {
+
 		entity.create();
 		success("文章创建成功");
-		return "redirect:/article/create?channel=".concat(entity.getChannel().getId());
+		return "redirect:/article/create/?channel=".concat(entity.getChannel().getId());
 	}
 
 	@RequestMapping(value = "/article/{id}/edit/", method = GET)
@@ -141,17 +145,18 @@ public class ArticleController extends ControllerSupport {
 	@RequestMapping(value = "/article/{id}/edit/", method = PUT)
 	public String edit(@PathVariable("id") String id, HttpServletRequest request) {
 
+		Article entity = articleService.get(id);
 		try {
 
-			Article entity = articleService.get(id);
 			bind(request, entity);
 			entity.modify();
 			success("文章修改成功");
-			
-			return REDIRECT_ONLINE_LIST.concat("?params[channel]=").concat(entity.getChannel().getId());
+
 		} catch (Exception e) {
-			return null;
+			error("修改文章失败，请核对数据后重试");
 		}
+
+		return REDIRECT_ONLINE_LIST.concat("?params[channel]=").concat(entity.getChannel().getId());
 
 	}
 
@@ -330,5 +335,14 @@ public class ArticleController extends ControllerSupport {
 	@Override
 	protected String getViewPackage() {
 		return "article";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 }

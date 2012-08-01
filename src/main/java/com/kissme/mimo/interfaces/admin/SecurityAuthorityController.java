@@ -6,11 +6,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -50,7 +53,7 @@ public class SecurityAuthorityController extends CrudControllerSupport<String, A
 
 	@Override
 	@RequestMapping(value = "/create/", method = POST)
-	public String create(Authority entity, BindingResult result) {
+	public String create(@Valid Authority entity, BindingResult result) {
 		if (result.hasErrors()) {
 			return null;
 		}
@@ -78,7 +81,7 @@ public class SecurityAuthorityController extends CrudControllerSupport<String, A
 			entity.modify();
 			success("用户权限修改成功,，请刷新该权限关联用户缓存，以使修改生效");
 		} catch (Exception e) {
-			return null;
+			error("用户权限修改失败，请核对数据重试");
 		}
 
 		return REDIRECT_LIST;
@@ -104,6 +107,15 @@ public class SecurityAuthorityController extends CrudControllerSupport<String, A
 	@Override
 	protected String getViewPackage() {
 		return "security/authority";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 
 }

@@ -7,12 +7,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,9 +55,15 @@ public class GuestbookController extends ControllerSupport {
 
 	@RequestMapping(value = "/create/", method = POST)
 	public Object create(@RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
-			@RequestParam("captcha") String captcha, Guestbook entity, HttpSession session) {
+							@RequestParam("captcha") String captcha,
+							@Valid Guestbook entity, BindingResult bindingResult,
+							HttpSession session) {
 
 		try {
+
+			if (bindingResult.hasErrors()) {
+				throw new MaliciousRequestException("Bad request!");
+			}
 
 			if (!Webs.isAjax(requestedWith)) {
 				throw new MaliciousRequestException("Bad request!");
@@ -90,7 +100,7 @@ public class GuestbookController extends ControllerSupport {
 			entity.modify();
 			success("留言修改成功");
 		} catch (Exception e) {
-			error("留言修改失败，请稍后重新");
+			error("修改留言失败，请稍后重新");
 		}
 		return REDIRECT_LIST;
 	}
@@ -112,5 +122,14 @@ public class GuestbookController extends ControllerSupport {
 
 	protected String getViewPackage() {
 		return "guestbook";
+	}
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		super.initBinder(request, binder);
+		setValidators(new Validator[] { validator });
 	}
 }
