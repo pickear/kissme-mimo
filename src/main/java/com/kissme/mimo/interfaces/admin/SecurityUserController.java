@@ -74,7 +74,8 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 	@RequestMapping(value = "/create/", method = POST)
 	public String create(@Valid User entity, BindingResult result) {
 		if (result.hasErrors()) {
-			return null;
+			error("创建用户失败，请核对数据后重试");
+			return REDIRECT_LIST;
 		}
 
 		entity.encodePassword().create();
