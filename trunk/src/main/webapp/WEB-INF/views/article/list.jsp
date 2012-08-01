@@ -13,7 +13,11 @@
 		
 		$("#offline").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要把选中的内容放入回收站吗?")){
+			if(items && items.length <=0){
+				alert("请先选择要放入回收站的文章");
+				return false;
+			}
+			if(confirm("你确定要把选中的文章放入回收站吗?")){
 				var itemsAsString = items.join(",");
 				$.ajax({
 					url : "${ctx}/article/offline/",
@@ -32,14 +36,15 @@
 				
 				return false;
 			}
-			
-			alert("请先选择要放入回收站的内容");
-			return false;
 		});
 		
 		$("#on-top").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要把选中的内容置顶吗?")){
+			if(items && items.length <=0){
+				alert("请先选择置顶的文章");
+				return false;
+			}
+			if(confirm("你确定要把选中的内容置顶吗?")){
 				var itemsAsString = items.join(",");
 				$.ajax({
 					url : "${ctx}/article/on-top/",
@@ -58,14 +63,16 @@
 				
 				return false;
 			}
-			
-			alert("请先选择置顶的内容");
-			return false;
+
 		});
 		
 		$("#not-on-top").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要把选中的内容取消置顶吗?")){
+			if(items && items.length <=0){
+				alert("请先选择取消置顶的文章");
+				return false;
+			}
+			if(confirm("你确定要把选中的内容取消置顶吗?")){
 				var itemsAsString = items.join(",");
 				$.ajax({
 					url : "${ctx}/article/not-on-top/",
@@ -85,13 +92,16 @@
 				return false;
 			}
 			
-			alert("请先选择取消置顶的内容");
-			return false;
+
 		});
 		
 		$("#not-comments").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要把选中的内容禁止评论吗?")){
+			if(items && items.length<=0){
+				alert("请先选择禁止评论的内容");
+				return false;
+			}
+			if(confirm("你确定要把选中的内容禁止评论吗?")){
 				var itemsAsString = items.join(",");
 				$.ajax({
 					url : "${ctx}/article/not-comments/",
@@ -110,14 +120,16 @@
 				
 				return false;
 			}
-			
-			alert("请先选择禁止评论的内容");
-			return false;
+
 		});
 		
 		$("#allow-comments").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要把选中的内容允许评论吗?")){
+			if(items && items.length<=0){
+				alert("请先选择允许评论的内容");
+				return false;
+			}
+			if(confirm("你确定要把选中的内容允许评论吗?")){
 				var itemsAsString = items.join(",");
 				$.ajax({
 					url : "${ctx}/article/allow-comments/",
@@ -136,9 +148,7 @@
 				
 				return false;
 			}
-			
-			alert("请先选择允许评论的内容");
-			return false;
+
 		});
 		
 	});
