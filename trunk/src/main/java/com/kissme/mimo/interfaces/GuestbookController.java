@@ -51,7 +51,7 @@ public class GuestbookController extends ControllerSupport {
 
 	@RequestMapping(value = "/create/", method = POST)
 	public Object create(@RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
-							@RequestParam("captcha") String captcha, Guestbook entity, HttpSession session) {
+			@RequestParam("captcha") String captcha, Guestbook entity, HttpSession session) {
 
 		try {
 
@@ -90,7 +90,7 @@ public class GuestbookController extends ControllerSupport {
 			entity.modify();
 			success("留言修改成功");
 		} catch (Exception e) {
-			return null;
+			error("留言修改失败，请稍后重新");
 		}
 		return REDIRECT_LIST;
 	}
