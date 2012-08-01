@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.kissme.core.orm.mybatis.MybatisRepositorySupport;
-import com.kissme.lang.Lang;
 import com.kissme.mimo.domain.channel.Channel;
 import com.kissme.mimo.domain.channel.ChannelRepository;
 
@@ -35,8 +34,8 @@ public class MybatisChannelRepository extends MybatisRepositorySupport<String, C
 					return (Channel) getSqlSession().selectOne(getNamespace().concat(".queryUniqueByPath"), path);
 				}
 			});
-		} catch (Exception e) {
-			throw Lang.uncheck(e);
+		} catch (Exception ignore) {
+			return null;
 		}
 	}
 
@@ -52,8 +51,8 @@ public class MybatisChannelRepository extends MybatisRepositorySupport<String, C
 					return (Channel) getSqlSession().selectOne(getNamespace().concat(".queryUniqueByName"), name);
 				}
 			});
-		} catch (Exception e) {
-			throw Lang.uncheck(e);
+		} catch (Exception ignore) {
+			return null;
 		}
 	}
 
