@@ -49,41 +49,21 @@ public class ChannelServiceImpl extends LifecycleEventHandler implements Channel
 		return channelRepository.queryUniqueByName(name);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.channel.ChannelService#queryPage(com.youboy.core.orm.Page)
-	 */
 	@Override
 	public Page<Channel> queryPage(Page<Channel> page) {
 		return channelRepository.queryPage(page);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.channel.ChannelService#get(java.lang.String)
-	 */
 	@Override
 	public Channel get(String id) {
 		return channelRepository.get(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.channel.ChannelService#queryTop()
-	 */
 	@Override
 	public List<Channel> queryTop() {
 		return channelRepository.queryTop();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.channel.ChannelService#query(java.lang.Object)
-	 */
 	@Override
 	public List<Channel> query(Object object) {
 		return channelRepository.query(object);
