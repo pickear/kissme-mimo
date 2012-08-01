@@ -296,7 +296,7 @@ function loadImages(params){
 	
 	$.ajax({
 		url : (editor.options.imagePath + "/photo-resource/list/?async").replace(/\/+/,"/"),
-		type : "GET",
+		type : "POST",
 		data : params,
 		dataType : "json",
 		success : function(page){
