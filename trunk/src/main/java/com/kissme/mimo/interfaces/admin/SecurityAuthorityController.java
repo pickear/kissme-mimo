@@ -55,7 +55,8 @@ public class SecurityAuthorityController extends CrudControllerSupport<String, A
 	@RequestMapping(value = "/create/", method = POST)
 	public String create(@Valid Authority entity, BindingResult result) {
 		if (result.hasErrors()) {
-			return null;
+			error("创建用户权限失败，请核对数据后重试");
+			return REDIRECT_LIST;
 		}
 
 		entity.create();

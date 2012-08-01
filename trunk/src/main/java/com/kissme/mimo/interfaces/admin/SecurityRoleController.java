@@ -69,7 +69,8 @@ public class SecurityRoleController extends CrudControllerSupport<String, Role> 
 	@RequestMapping(value = "/create/", method = POST)
 	public String create(@Valid Role entity, BindingResult result) {
 		if (result.hasErrors()) {
-			return null;
+			error("创建用户角色失败，请核对数据后重试");
+			return REDIRECT_LIST;
 		}
 
 		entity.create();
