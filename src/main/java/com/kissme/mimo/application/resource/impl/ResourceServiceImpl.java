@@ -116,9 +116,9 @@ public class ResourceServiceImpl implements ResourceService {
 		};
 	}
 
-	protected ResourceObject createSingleResourceBean(File file, Conf conf) throws IOException {
+	protected ResourceObject createSingleResourceBean(File file, Conf conf) {
 
-		String fileCanonicalPath = file.getCanonicalPath();
+		String fileCanonicalPath = Files.canonical(file);
 		String relativePath = StringUtils.substringAfter(fileCanonicalPath, getResourcePath(conf));
 		String fullRelativePath = StringUtils.substringAfter(fileCanonicalPath, conf.getRootPath());
 

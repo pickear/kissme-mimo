@@ -1,7 +1,6 @@
 package com.kissme.mimo.application.resource.impl;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -39,8 +38,8 @@ public class SecurityResourceServiceImpl extends ResourceServiceImpl {
 	}
 
 	@Override
-	protected ResourceObject createSingleResourceBean(File file, Conf conf) throws IOException {
-		String fileCanonicalPath = file.getCanonicalPath();
+	protected ResourceObject createSingleResourceBean(File file, Conf conf) {
+		String fileCanonicalPath = Files.canonical(file);
 		String relativePath = StringUtils.substringAfter(fileCanonicalPath, getResourcePath(conf));
 		String fullRelativePath = StringUtils.substringAfter(fileCanonicalPath, conf.getRootPath());
 
