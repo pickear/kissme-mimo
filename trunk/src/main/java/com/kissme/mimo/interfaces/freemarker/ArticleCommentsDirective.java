@@ -3,10 +3,10 @@ package com.kissme.mimo.interfaces.freemarker;
 import java.io.IOException;
 import java.util.Map;
 
+import com.kissme.core.ioc.SpringIoc;
 import com.kissme.core.orm.Page;
 import com.kissme.mimo.application.article.ArticleCommentService;
 import com.kissme.mimo.domain.article.ArticleComment;
-import com.kissme.mimo.infrastructure.SpringBeanHolder;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -29,10 +29,12 @@ public class ArticleCommentsDirective extends PagableFreemarkerDirective<Article
 
 		TemplateScalarModel articleModel = (TemplateScalarModel) params.get(ARTICLE_PARAM);
 		if (isNotBlankScalarModel(articleModel)) {
+			
 			String article = articleModel.getAsString();
 			page.getParams().put("article", article);
 			page.getParams().put("status", 1);
-			ArticleCommentService service = SpringBeanHolder.getBean(ArticleCommentService.class);
+			
+			ArticleCommentService service = SpringIoc.getBean(ArticleCommentService.class);
 			page = service.queryPage(page);
 		}
 

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.google.common.base.Optional;
+import com.kissme.core.ioc.SpringIoc;
 import com.kissme.mimo.application.article.ArticleViewsService;
 import com.kissme.mimo.domain.article.ArticleViews;
-import com.kissme.mimo.infrastructure.SpringBeanHolder;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -29,7 +29,7 @@ public class ArticleViewsDirective extends FreemarkerDirectiveSupport {
 		TemplateScalarModel articleModel = (TemplateScalarModel) params.get(ARTICLE_PARAM);
 		if (isNotBlankScalarModel(articleModel)) {
 
-			ArticleViewsService service = SpringBeanHolder.getBean(ArticleViewsService.class);
+			ArticleViewsService service = SpringIoc.getBean(ArticleViewsService.class);
 			ArticleViews entity = service.get(articleModel.getAsString());
 
 			loopVars[0] = beansWrapper.wrap(Optional.fromNullable(entity).or(new ArticleViews()));

@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -210,14 +208,5 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 	@Override
 	protected String getViewPackage() {
 		return "security/user";
-	}
-
-	@Autowired
-	private Validator validator;
-
-	@Override
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
-		super.initBinder(request, binder);
-		setValidators(new Validator[] { validator });
 	}
 }

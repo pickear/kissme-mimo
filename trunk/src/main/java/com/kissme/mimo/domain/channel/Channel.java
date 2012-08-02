@@ -9,9 +9,9 @@ import org.apache.commons.lang.StringUtils;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.kissme.core.domain.event.AbstractLifecycleAwareObject;
+import com.kissme.core.helper.RichHtmlHelper;
 import com.kissme.mimo.domain.template.Template;
 import com.kissme.mimo.domain.template.TemplateHelper;
-import com.kissme.mimo.infrastructure.RichHtmlPopulator;
 
 /**
  * 
@@ -146,7 +146,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	 * @return
 	 */
 	public List<String> getPhotos() {
-		return RichHtmlPopulator.populatePhoto(getAbout());
+		return RichHtmlHelper.populatePhotos(getAbout());
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	 * @return
 	 */
 	public List<String> getFlashes() {
-		return RichHtmlPopulator.populateFlash(getAbout());
+		return RichHtmlHelper.populateFlashes(getAbout());
 	}
 
 	/**

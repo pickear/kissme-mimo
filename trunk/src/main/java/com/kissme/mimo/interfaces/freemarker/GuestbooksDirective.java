@@ -3,10 +3,10 @@ package com.kissme.mimo.interfaces.freemarker;
 import java.io.IOException;
 import java.util.Map;
 
+import com.kissme.core.ioc.SpringIoc;
 import com.kissme.core.orm.Page;
 import com.kissme.mimo.application.guestbook.GuestbookService;
 import com.kissme.mimo.domain.guestbook.Guestbook;
-import com.kissme.mimo.infrastructure.SpringBeanHolder;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -25,7 +25,7 @@ public class GuestbooksDirective extends PagableFreemarkerDirective<Guestbook> {
 										TemplateModel[] loopVars, TemplateDirectiveBody body,
 										Page<Guestbook> page) throws TemplateException, IOException {
 
-		GuestbookService service = SpringBeanHolder.getBean(GuestbookService.class);
+		GuestbookService service = SpringIoc.getBean(GuestbookService.class);
 		page.getParams().put("status", 1);
 		page = service.queryPage(page);
 		return page;

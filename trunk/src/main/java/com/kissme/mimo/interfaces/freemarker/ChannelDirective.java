@@ -3,9 +3,9 @@ package com.kissme.mimo.interfaces.freemarker;
 import java.io.IOException;
 import java.util.Map;
 
+import com.kissme.core.ioc.SpringIoc;
 import com.kissme.mimo.application.channel.ChannelService;
 import com.kissme.mimo.domain.channel.Channel;
-import com.kissme.mimo.infrastructure.SpringBeanHolder;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -28,7 +28,7 @@ public class ChannelDirective extends FreemarkerDirectiveSupport {
 		TemplateScalarModel channelNameModel = (TemplateScalarModel) params.get(CHANNEL_NAME_PARAM);
 		if (isNotBlankScalarModel(channelNameModel)) {
 
-			ChannelService service = SpringBeanHolder.getBean(ChannelService.class);
+			ChannelService service = SpringIoc.getBean(ChannelService.class);
 			Channel entity = service.queryUniqueByName(channelNameModel.getAsString());
 
 			loopVars[0] = beansWrapper.wrap(entity);

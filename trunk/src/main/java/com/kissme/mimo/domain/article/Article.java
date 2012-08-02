@@ -5,9 +5,9 @@ import java.util.List;
 import javax.validation.constraints.Size;
 
 import com.kissme.core.domain.event.AbstractLifecycleAwareObject;
+import com.kissme.core.helper.RichHtmlHelper;
 import com.kissme.lang.Preconditions;
 import com.kissme.mimo.domain.channel.Channel;
-import com.kissme.mimo.infrastructure.RichHtmlPopulator;
 
 /**
  * 
@@ -184,7 +184,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	 * @return
 	 */
 	public List<String> getPhotos() {
-		return RichHtmlPopulator.populatePhoto(getContent());
+		return RichHtmlHelper.populatePhotos(getContent());
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	 * @return
 	 */
 	public List<String> getFlashes() {
-		return RichHtmlPopulator.populateFlash(getContent());
+		return RichHtmlHelper.populateFlashes(getContent());
 	}
 
 	/**
