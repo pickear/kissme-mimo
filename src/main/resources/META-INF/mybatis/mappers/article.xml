@@ -186,6 +186,9 @@
 		<if test="params.channel != null and params.channel != ''">
 			and self.channel_id=#{params.channel}
 		</if>
+		<if test="params.channelId != null and params.channelId != ''">
+			and self.channel_id=#{params.channelId}
+		</if>
 		<if test="params.title != null and params.title != ''">
 			and self.title like concat(concat('%',#{params.title}),'%')
 		</if>
