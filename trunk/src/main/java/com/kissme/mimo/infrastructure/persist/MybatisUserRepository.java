@@ -40,6 +40,7 @@ public class MybatisUserRepository extends MybatisRepositorySupport<String, User
 
 			});
 		} catch (Exception ignore) {
+			getLogger().error("some error occur when access to the cacher", ignore);
 			return null;
 		}
 	}

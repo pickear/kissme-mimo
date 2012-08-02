@@ -35,6 +35,7 @@ public class MybatisChannelRepository extends MybatisRepositorySupport<String, C
 				}
 			});
 		} catch (Exception ignore) {
+			getLogger().error("some error occur when access to the cache on path", ignore);
 			return null;
 		}
 	}
@@ -52,6 +53,7 @@ public class MybatisChannelRepository extends MybatisRepositorySupport<String, C
 				}
 			});
 		} catch (Exception ignore) {
+			getLogger().error("some error occur when access to the cache on name", ignore);
 			return null;
 		}
 	}

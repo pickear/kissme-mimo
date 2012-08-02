@@ -29,5 +29,7 @@ public class MybatisRoleRepository extends MybatisRepositorySupport<String, Role
 		if (entity.hasAuthority()) {
 			getSqlSession().insert(getNamespace().concat(".saveAuthorities"), entity);
 		}
+		
+		getLogger().warn("must evict the user cache when update the role");
 	}
 }
