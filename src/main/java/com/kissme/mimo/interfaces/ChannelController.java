@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -282,14 +280,5 @@ public class ChannelController extends CrudControllerSupport<String, Channel> {
 	@Override
 	protected String getViewPackage() {
 		return "channel";
-	}
-
-	@Autowired
-	private Validator validator;
-
-	@Override
-	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
-		super.initBinder(request, binder);
-		setValidators(new Validator[] { validator });
 	}
 }
