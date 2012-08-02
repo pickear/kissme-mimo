@@ -104,11 +104,6 @@ public class ArticleAttachment extends AbstractLifecycleAwareObject<ArticleAttac
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.core.domain.event.AbstractLifecycleAwareObject#beforeCreate()
-	 */
 	@Override
 	protected boolean beforeCreate() {
 		setCreateTime(System.currentTimeMillis()).selfCheck();
@@ -122,11 +117,6 @@ public class ArticleAttachment extends AbstractLifecycleAwareObject<ArticleAttac
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.core.domain.event.AbstractLifecycleAwareObject#beforeDelete()
-	 */
 	@Override
 	protected boolean beforeDelete() {
 		if (StringUtils.isBlank(this.fullPath)) {
@@ -136,21 +126,11 @@ public class ArticleAttachment extends AbstractLifecycleAwareObject<ArticleAttac
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.core.domain.event.AbstractLifecycleAwareObject#afterDelete()
-	 */
 	@Override
 	protected void afterDelete() {
-		new DeleteFileCommand(this.fullPath).execute();
+		new DeleteFileCommand(new File(this.fullPath)).execute();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.core.domain.event.AbstractLifecycleAwareObject#getCaller()
-	 */
 	@Override
 	protected ArticleAttachment getCaller() {
 		return this;

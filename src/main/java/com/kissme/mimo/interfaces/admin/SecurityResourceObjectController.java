@@ -1,5 +1,6 @@
 package com.kissme.mimo.interfaces.admin;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -135,9 +136,10 @@ public class SecurityResourceObjectController extends ControllerSupport {
 
 	private void doUpload(ResourceObject bean, MultipartFile file, Conf conf) throws IOException {
 		String targetFilePath = Files.join(conf.getSecurityResourcePath(), bean.getPath(), file.getOriginalFilename());
-
-		new FileCommandInvoker().command(new MakeFileCommand(targetFilePath))
-								.command(new WriteBytesToFileCommand(targetFilePath, file.getBytes()))
+		File targetFile = new File(targetFilePath);
+		
+		new FileCommandInvoker().command(new MakeFileCommand(targetFile))
+								.command(new WriteBytesToFileCommand(targetFile, file.getBytes()))
 								.invoke();
 	}
 

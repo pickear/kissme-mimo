@@ -1,5 +1,6 @@
 package com.kissme.mimo.interfaces;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -152,9 +153,10 @@ public class PhotoResourceController extends ControllerSupport {
 	private String doUpload(ResourceObject bean, MultipartFile file, Conf conf) throws IOException {
 		String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		String targetFilePath = Files.join(conf.getPhotoPath(), bean.getPath(), currentDate, file.getOriginalFilename());
+		File targetFile = new File(targetFilePath);
 
-		new FileCommandInvoker().command(new MakeFileCommand(targetFilePath))
-								.command(new WriteBytesToFileCommand(targetFilePath, file.getBytes()))
+		new FileCommandInvoker().command(new MakeFileCommand(targetFile))
+								.command(new WriteBytesToFileCommand(targetFile, file.getBytes()))
 								.invoke();
 
 		return StringUtils.substringAfter(targetFilePath, conf.getRootPath());
