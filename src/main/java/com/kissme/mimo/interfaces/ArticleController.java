@@ -7,7 +7,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +24,7 @@ import com.kissme.core.web.controller.ControllerSupport;
 import com.kissme.core.web.exception.ResourceNotFoundException;
 import com.kissme.lang.Files;
 import com.kissme.lang.Lang;
+import com.kissme.lang.Preconditions;
 import com.kissme.mimo.application.article.ArticleService;
 import com.kissme.mimo.application.article.ArticleViewsService;
 import com.kissme.mimo.application.channel.ChannelService;
@@ -147,6 +148,8 @@ public class ArticleController extends ControllerSupport {
 		try {
 
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
+			
 			entity.modify();
 			success("文章修改成功");
 
@@ -156,6 +159,10 @@ public class ArticleController extends ControllerSupport {
 
 		return REDIRECT_ONLINE_LIST.concat("?params[channel]=").concat(entity.getChannel().getId());
 
+	}
+
+	private void checkIdNotModified(String one, String another) {
+		Preconditions.isTrue(StringUtils.equals(one, another));
 	}
 
 	@RequestMapping(value = "/article/{id}/delete/", method = DELETE)

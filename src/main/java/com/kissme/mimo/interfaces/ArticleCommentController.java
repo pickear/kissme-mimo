@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import com.kissme.core.web.controller.ControllerSupport;
 import com.kissme.core.web.exception.MaliciousRequestException;
 import com.kissme.lang.Files;
 import com.kissme.lang.Lang;
+import com.kissme.lang.Preconditions;
 import com.kissme.mimo.application.article.ArticleCommentService;
 import com.kissme.mimo.application.article.ArticleService;
 import com.kissme.mimo.domain.article.Article;
@@ -122,6 +124,8 @@ public class ArticleCommentController extends ControllerSupport {
 
 			ArticleComment entity = articleCommentService.get(id);
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
+			
 			entity.modify();
 			success("文章评论修改成功");
 		} catch (Exception e) {
@@ -129,6 +133,10 @@ public class ArticleCommentController extends ControllerSupport {
 		}
 
 		return REDIRECT_LIST;
+	}
+
+	private void checkIdNotModified(String one, String another) {
+		Preconditions.isTrue(StringUtils.equals(one, another));
 	}
 
 	/**

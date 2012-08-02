@@ -94,6 +94,8 @@ public class SecurityRoleController extends CrudControllerSupport<String, Role> 
 			entity.getAuthoritiesTrans().clear();
 
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
+			
 			entity.modify();
 			success("用户角色修改成功，请刷新该角色关联用户缓存，以使修改生效");
 		} catch (Exception e) {

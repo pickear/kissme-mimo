@@ -100,7 +100,9 @@ public class SecurityUserController extends CrudControllerSupport<String, User> 
 
 			String oldUsername = entity.getUsername();
 			String oldPassword = entity.getPassword();
+			
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
 			checkUsernameNotModified(oldUsername, entity.getUsername());
 
 			if (entity.hasPassword()) {

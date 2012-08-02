@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.kissme.core.web.Webs;
 import com.kissme.core.web.controller.ControllerSupport;
 import com.kissme.core.web.exception.MaliciousRequestException;
 import com.kissme.lang.Lang;
+import com.kissme.lang.Preconditions;
 import com.kissme.mimo.application.guestbook.GuestbookService;
 import com.kissme.mimo.domain.guestbook.Guestbook;
 import com.kissme.mimo.interfaces.util.HttpCaptchaUtils;
@@ -94,6 +96,7 @@ public class GuestbookController extends ControllerSupport {
 
 			Guestbook entity = guestbookService.get(id);
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
 
 			entity.modify();
 			success("留言修改成功");
@@ -101,6 +104,10 @@ public class GuestbookController extends ControllerSupport {
 			error("修改留言失败，请稍后重新");
 		}
 		return REDIRECT_LIST;
+	}
+
+	private void checkIdNotModified(String one, String another) {
+		Preconditions.isTrue(StringUtils.equals(one, another));
 	}
 
 	@RequestMapping(value = "/{id}/delete/", method = DELETE)

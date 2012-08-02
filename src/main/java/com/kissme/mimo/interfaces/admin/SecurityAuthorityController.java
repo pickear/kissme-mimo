@@ -77,6 +77,8 @@ public class SecurityAuthorityController extends CrudControllerSupport<String, A
 
 			Authority entity = authorityService.get(id);
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
+			
 			entity.modify();
 			success("用户权限修改成功,，请刷新该权限关联用户缓存，以使修改生效");
 		} catch (Exception e) {
