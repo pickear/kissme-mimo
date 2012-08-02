@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,19 +120,29 @@ public class ArticleController extends ControllerSupport {
 	}
 
 	@RequestMapping(value = "/article/create/", params = { "!action" }, method = POST)
-	public String create(Article entity, BindingResult result) {
+	public String create(@Valid Article entity, BindingResult result) {
+
+		if (result.hasErrors()) {
+			error("创建文章失败，请核对数据后重试");
+			return REDIRECT_ONLINE_LIST.concat("?params[channelId]=").concat(entity.getChannel().getId());
+		}
 
 		entity.create();
 		success("文章创建成功");
-		return REDIRECT_ONLINE_LIST.concat("?params[channel]=").concat(entity.getChannel().getId());
+		return REDIRECT_ONLINE_LIST.concat("?params[channelId]=").concat(entity.getChannel().getId());
 	}
 
 	@RequestMapping(value = "/article/create/", params = { "action" }, method = POST)
-	public String create(@RequestParam("action") String ingore, Article entity, BindingResult result) {
+	public String create(@RequestParam("action") String ingore, @Valid Article entity, BindingResult result) {
+
+		if (result.hasErrors()) {
+			error("创建文章失败，请核对数据后重试");
+			return REDIRECT_ONLINE_LIST.concat("?params[channelId]=").concat(entity.getChannel().getId());
+		}
 
 		entity.create();
 		success("文章创建成功");
-		return "redirect:/article/create/?channel=".concat(entity.getChannel().getId());
+		return "redirect:/article/create/?channelId=".concat(entity.getChannel().getId());
 	}
 
 	@RequestMapping(value = "/article/{id}/edit/", method = GET)
@@ -149,7 +160,7 @@ public class ArticleController extends ControllerSupport {
 
 			bind(request, entity);
 			checkIdNotModified(id, entity.getId());
-			
+
 			entity.modify();
 			success("文章修改成功");
 
@@ -157,7 +168,7 @@ public class ArticleController extends ControllerSupport {
 			error("修改文章失败，请核对数据后重试");
 		}
 
-		return REDIRECT_ONLINE_LIST.concat("?params[channel]=").concat(entity.getChannel().getId());
+		return REDIRECT_ONLINE_LIST.concat("?params[channelId]=").concat(entity.getChannel().getId());
 
 	}
 
