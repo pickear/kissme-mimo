@@ -35,6 +35,7 @@ public class MybatisArticleRepository extends MybatisRepositorySupport<String, A
 
 			});
 		} catch (Exception ignore) {
+			getLogger().error("some error occur when access to the cache", ignore);
 			return null;
 		}
 	}
