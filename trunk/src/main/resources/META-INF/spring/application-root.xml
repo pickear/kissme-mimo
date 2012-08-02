@@ -75,7 +75,7 @@
     <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" order="99" />
   </aop:config>
 	
-	<bean id="springBeanHolder" class="com.kissme.mimo.infrastructure.SpringBeanHolder" lazy-init="false" />
+	<bean id="springIoc" class="com.kissme.core.ioc.SpringIoc" lazy-init="false" />
 	<aop:aspectj-autoproxy />
 	
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
