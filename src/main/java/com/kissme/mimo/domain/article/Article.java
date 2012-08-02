@@ -29,7 +29,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	private String content;
 	@Size(max = 255)
 	private String source;
-	@Size(max = 255)
+	@Size(max = 32)
 	private String tags;
 	private int priority;
 
