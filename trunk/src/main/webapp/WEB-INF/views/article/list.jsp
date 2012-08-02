@@ -8,7 +8,7 @@
 <script type="text/javascript">
 	$(function(){
 		$("#add").click(function(){
-			location.href = "${ctx}/article/create/?channel=".concat("${page.params.channel}");
+			location.href = "${ctx}/article/create/?channelId=".concat("${page.params.channelId}");
 		});
 		
 		$("#offline").click(function(){

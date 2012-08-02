@@ -23,7 +23,7 @@ $(function(){
 			channelViews.add("0", "-1", "内容管理", "", "内容管理");
 				
 			$.each(data,function(index,channel){
-				channelViews.add(channel.id, channel.fatherId, channel.name, "${ctx}/article/list/online/?params[channel]="+channel.id, channel.name);
+				channelViews.add(channel.id, channel.fatherId, channel.name, "${ctx}/article/list/online/?params[channelId]="+channel.id, channel.name);
 			});
 				
 			var i = channelViews + "";

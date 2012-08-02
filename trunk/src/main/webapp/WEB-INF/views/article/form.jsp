@@ -11,7 +11,7 @@
 
 <form:form method="post" modelAttribute="article">
 <input type="hidden" name="_method" value="${_method }" />
-<c:choose><c:when test="${not empty article.channel.id }"><input type="hidden" name="channel.id" value="${article.channel.id }" /></c:when><c:otherwise><input type="hidden" name="channel.id" value="${param.channel }" /></c:otherwise></c:choose>
+<c:choose><c:when test="${not empty article.channel.id }"><input type="hidden" name="channel.id" value="${article.channel.id }" /></c:when><c:otherwise><input type="hidden" name="channel.id" value="${param.channelId }" /></c:otherwise></c:choose>
  <!--content start-->
 <div class="content">
 <div class="table">
