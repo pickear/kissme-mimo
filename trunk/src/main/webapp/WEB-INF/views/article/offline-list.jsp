@@ -85,9 +85,9 @@
 				<tr>
 					<td><input type="checkbox" name="items" id="checkbox" value="${article.id}"/></td>
 					<td>${article.channel.name}&nbsp;</td>
-					<td>${fn:substring(article.title,0,15)}...&nbsp;</td>
+					<td>${fn:substring(article.title,0,15)}&nbsp;</td>
 					<td>
-						${fn:substring(article.source,0,15)}...&nbsp;
+						${fn:substring(article.source,0,15)}&nbsp;
 					</td>
 					<td class="date">
 						${article.modifyTime}
