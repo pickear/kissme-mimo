@@ -10,7 +10,12 @@
 		
 		$("#online").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要把选中的内容还原吗?")){
+			if(items && items.length <= 0){
+				alert("请先选择要还原的内容");
+				return false;
+			}
+			
+			if(confirm("你确定要把选中的内容还原吗?")){
 				var itemsAsString = items.join(",");
 				$.ajax({
 					url : "${ctx}/article/online/",
@@ -29,14 +34,17 @@
 				
 				return false;
 			}
-			
-			alert("请先选择要还原的内容");
-			return false;
+
 		});
 		
 		$("#del").click(function(){
 			var items = mimo.select();
-			if(items && items.length > 0 && confirm("你确定要删除这些内容吗?")){
+			if(items && items.length <= 0){
+				alert("请先选择要删除的内容");
+				return false;
+			}
+			
+			if(confirm("你确定要删除这些内容吗?")){
 				$('input[name="_method"]').remove();
 				$("#myForm").attr("action", "${ctx}/article/delete/")
 							.attr("method","post")
@@ -45,9 +53,6 @@
 				
 				return false;
 			}
-			
-			alert("请先选择要删除的内容");
-			return false;
 		});
 		
 	});
