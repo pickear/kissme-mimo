@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2012-08-01 14:17:06
+Date: 2012-08-02 21:32:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,7 @@ CREATE TABLE `mimo_article` (
   KEY `status` (`status`) USING BTREE,
   KEY `empty_photos` (`not_empty_photos`) USING BTREE,
   CONSTRAINT `mimo_article_ibfk_1` FOREIGN KEY (`channel_id`) REFERENCES `mimo_channel` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mimo_article
@@ -133,7 +133,7 @@ CREATE TABLE `mimo_channel` (
   CONSTRAINT `mimo_channel_ibfk_1` FOREIGN KEY (`father_id`) REFERENCES `mimo_channel` (`id`) ON DELETE CASCADE,
   CONSTRAINT `mimo_channel_ibfk_2` FOREIGN KEY (`self_template_id`) REFERENCES `mimo_template` (`id`),
   CONSTRAINT `mimo_channel_ibfk_3` FOREIGN KEY (`article_template_id`) REFERENCES `mimo_template` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mimo_channel
@@ -172,7 +172,7 @@ CREATE TABLE `mimo_guestbook` (
   PRIMARY KEY (`id`),
   KEY `email` (`email`) USING BTREE,
   KEY `create_time` (`create_time`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mimo_guestbook
@@ -195,7 +195,7 @@ CREATE TABLE `mimo_monitoring_record` (
   KEY `actor` (`actor`) USING BTREE,
   KEY `action` (`action`) USING BTREE,
   KEY `create_time` (`create_time`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mimo_monitoring_record
@@ -408,7 +408,7 @@ CREATE TABLE `mimo_template` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`) USING BTREE,
   UNIQUE KEY `name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mimo_template
