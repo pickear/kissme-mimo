@@ -216,6 +216,8 @@ public class ChannelController extends CrudControllerSupport<String, Channel> {
 
 			Channel entity = channelService.get(id);
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
+			
 			entity.modify();
 			success("栏目修改成功");
 		} catch (Exception e) {

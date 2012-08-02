@@ -97,6 +97,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 			Template entity = templateService.get(id);
 			bind(request, entity);
+			checkIdNotModified(id, entity.getId());
 
 			Conf conf = confOnWeb.wrap(confsRepository.getConf());
 			entity.selfAdjusting(conf).modify();
