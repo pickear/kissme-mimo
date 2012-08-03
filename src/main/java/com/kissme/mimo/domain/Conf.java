@@ -19,7 +19,7 @@ public class Conf implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Conf DEFAULT = new Conf().setTemplatePath("WEB-INF/front/template")
+	private static final Conf DEFAULT = new Conf().setTemplatePath("resources/front/template")
 													.setResourcePath("resources")
 													.setSecurityResourcePath("WEB-INF")
 													.setRecycleResourcePath("recycle-resource")
