@@ -34,7 +34,7 @@
 <tr>
 <td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>文件编码：</td>
 <td colspan="2">
-	<select name="fileencoding" >
+	<select name="fencoding" >
 		<option label="UTF-8" value="UTF-8"/>
 		<option label="GBK" value="GBK"/>
 	</select>
@@ -43,13 +43,13 @@
 <tr>
 <td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>内容：</td>
 <td colspan="2">
-	<input id="ftl" type="checkbox" name="suffixes" value="ftl" checked="checked" />
+	<input id="ftl" type="checkbox" name="suffixs" value="ftl" checked="checked" />
 	<label for="ftl">&nbsp;ftl&nbsp;</label>
-	<input id="html" type="checkbox" name="suffixes" value="html"/>
+	<input id="html" type="checkbox" name="suffixs" value="html"/>
 	<label for="html">&nbsp;html&nbsp;</label>
-	<input id="htm" type="checkbox" name="suffixes" value="htm"/>
+	<input id="htm" type="checkbox" name="suffixs" value="htm"/>
 	<label for="htm">&nbsp;htm&nbsp;</label>
-	<input id="txt" type="checkbox" name="suffixes" value="txt"/>
+	<input id="txt" type="checkbox" name="suffixs" value="txt"/>
 	<label for="txt">&nbsp;txt&nbsp;</label>
 </td>
 </tr>
