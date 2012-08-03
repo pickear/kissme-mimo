@@ -130,7 +130,6 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@RequestMapping(value = "/upload/", method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, @RequestParam("encoding") final String encoding,
-							@RequestParam("fencoding") final String fileEncoding, 
 							@RequestParam("suffixs") final String[] suffixs) {
 
 		try {
@@ -155,7 +154,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				@Override
 				public void invoke(int index, File file) {
 
-					Template template = convertToTemplate(templatedir, file, fileEncoding);
+					Template template = convertToTemplate(templatedir, file);
 					replaceTemplateContent(conf, template, resourceFiles);
 
 					Template existTemplate = templateService.lazyGetByName(template.getName());
@@ -209,7 +208,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		});
 	}
 
-	protected Template convertToTemplate(File templatedir, File file, String encoding) {
+	protected Template convertToTemplate(File templatedir, File file) {
 		String filepath = Files.canonical(file);
 		String templatepath = Files.canonical(templatedir);
 		int prefixIndex = StringUtils.indexOf(filepath, templatepath);
@@ -229,8 +228,9 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		}
 
 		String templatename = filepath.substring(0, dot);
-		String templatecontent = Files.read(file, encoding);
-		return new Template().setName(templatename).setContent(templatecontent).setEncode(encoding);
+		// only accept utf-8
+		String templatecontent = Files.read(file, "UTF-8");
+		return new Template().setName(templatename).setContent(templatecontent).setEncode("UTF-8");
 	}
 
 	protected void replaceTemplateContent(Conf conf, Template template, File[] files) {
@@ -261,7 +261,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 					}
 
 					String relativePath = StringUtils.substringAfter(filepath, Files.asUnix(conf.getRootPath()));
-					relativePath = Files.asUnix(Files.join(conf.getContext(), relativePath));
+					relativePath = Files.asUnix(Files.join("/", conf.getContext(), relativePath));
 					String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
 					template.setContent(content);
 				}
