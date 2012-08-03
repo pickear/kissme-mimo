@@ -16,10 +16,20 @@ import com.kissme.mimo.domain.template.TemplateRepository;
 @Repository
 public class MybatisTemplateRepository extends MybatisRepositorySupport<String, Template> implements TemplateRepository {
 
+	@Override
+	public Template getByName(String name) {
+		return (Template) getSqlSession().selectOne(getNamespace().concat(".getByName"), name);
+	}
+
+	@Override
+	public Template lazyGetByName(String name) {
+		return (Template) getSqlSession().selectOne(getNamespace().concat(".lazyGetByName"), name);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Template> lazyQuery(Object object) {
 		return getSqlSession().selectList(getNamespace().concat(".lazyQuery"), object);
 	}
-	
+
 }
