@@ -57,6 +57,17 @@
 	<include refid="commonSelect"/>
 	where self.id=#{id}
 </select>
+
+<select id="getByName" resultMap="templateResult">
+	<include refid="commonSelect"/>
+	where self.name=#{name}
+</select>
+
+<select id="lazyGetByName" resultMap="templateResult">
+	<include refid="lazySelect"/>
+	where self.name=#{name}
+</select>
+
 <select id="query" resultMap="templateResult">
 	<include refid="commonSelect"/>
 </select>
