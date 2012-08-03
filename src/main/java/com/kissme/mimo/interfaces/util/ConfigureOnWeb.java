@@ -34,21 +34,25 @@ public final class ConfigureOnWeb implements ServletContextAware {
 	 * @return
 	 */
 	public final Conf wrap(Conf conf) {
-		String templatePath = Files.join(getServletContextPath(), conf.getTemplatePath());
-		String resourcePath = Files.join(getServletContextPath(), conf.getResourcePath());
-		String securityResourcePath = Files.join(getServletContextPath(), conf.getSecurityResourcePath());
-		String recycleResourcePath = Files.join(getServletContextPath(), conf.getRecycleResourcePath());
-		String attachmentPath = Files.join(getServletContextPath(), conf.getAttachmentPath());
-		String photoPath = Files.join(getServletContextPath(), conf.getPhotoPath());
+		String templatePath = Files.join(getContextRealPath(), conf.getTemplatePath());
+		String resourcePath = Files.join(getContextRealPath(), conf.getResourcePath());
+		String securityResourcePath = Files.join(getContextRealPath(), conf.getSecurityResourcePath());
+		String recycleResourcePath = Files.join(getContextRealPath(), conf.getRecycleResourcePath());
+		String attachmentPath = Files.join(getContextRealPath(), conf.getAttachmentPath());
+		String photoPath = Files.join(getContextRealPath(), conf.getPhotoPath());
 
-		conf.setAttachmentPath(attachmentPath).setPhotoPath(photoPath);
+		conf.setContext(getContextPath()).setAttachmentPath(attachmentPath).setPhotoPath(photoPath);
 		conf.setRecycleResourcePath(recycleResourcePath).setSecurityResourcePath(securityResourcePath);
-		return conf.setTemplatePath(templatePath).setResourcePath(resourcePath).setRootPath(getServletContextPath());
+		return conf.setTemplatePath(templatePath).setResourcePath(resourcePath).setRootPath(getContextRealPath());
 	}
 
-	private String getServletContextPath() {
+	private String getContextRealPath() {
 		Preconditions.notNull(this.context);
 		return context.getRealPath("/");
 	}
-
+	
+	private String getContextPath() {
+		Preconditions.notNull(this.context);
+		return context.getContextPath();
+	}
 }
