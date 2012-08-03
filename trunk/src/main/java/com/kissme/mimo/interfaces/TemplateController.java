@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kissme.core.filecommand.UnzipFileCommand;
+import com.kissme.core.helper.RichHtmlHelper;
 import com.kissme.core.orm.Page;
 import com.kissme.core.web.controller.CrudControllerSupport;
 import com.kissme.lang.Each;
@@ -37,6 +38,7 @@ import com.kissme.mimo.application.template.TemplateService;
 import com.kissme.mimo.domain.Conf;
 import com.kissme.mimo.domain.ConfsRepository;
 import com.kissme.mimo.domain.template.Template;
+import com.kissme.mimo.domain.template.TemplateHelper;
 import com.kissme.mimo.interfaces.util.ConfigureOnWeb;
 import com.kissme.mimo.interfaces.util.JsonMessage;
 
@@ -128,7 +130,8 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@RequestMapping(value = "/upload/", method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, @RequestParam("encoding") final String encoding,
-							@RequestParam("fileencoding") final String fileEncoding, @RequestParam("suffixes") final String[] supportSuffixes) {
+							@RequestParam("fencoding") final String fileEncoding, 
+							@RequestParam("suffixs") final String[] suffixs) {
 
 		try {
 
@@ -144,13 +147,17 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 									.command(new UnzipFileCommand(temp, templatedir, encoding))
 									.invoke();
 
-			File[] templatefiles = listUploadTemplateFiles(templatedir, supportSuffixes, current);
-			Lang.each(templatefiles, new Each<File>() {
+			final File[] templateFiles = listUploadFiles(templatedir, suffixs, current);
+			final File[] resourceFiles = listUploadFiles(templatedir, new String[] { "css", "js", "jpg", "jpeg", "ico", "png", "gif", "bmp" }, current);
+
+			Lang.each(templateFiles, new Each<File>() {
 
 				@Override
 				public void invoke(int index, File file) {
 
 					Template template = convertToTemplate(templatedir, file, fileEncoding);
+					replaceTemplateContent(conf, template, resourceFiles);
+
 					Template existTemplate = templateService.lazyGetByName(template.getName());
 					if (null == existTemplate) {
 						template.selfAdjusting(conf).create();
@@ -177,7 +184,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		Preconditions.isTrue(FileType.ZIP == Files.guessType(data));
 	}
 
-	private File[] listUploadTemplateFiles(final File templatedir, final String[] supportSuffixes, final long current) {
+	private File[] listUploadFiles(final File templatedir, final String[] suffixs, final long current) {
 
 		return Files.list(templatedir, new FileFilter() {
 
@@ -192,7 +199,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				}
 
 				String suffix = Files.suffix(pathname.getName());
-				for (String support : supportSuffixes) {
+				for (String support : suffixs) {
 					if (StringUtils.equalsIgnoreCase(support, suffix)) {
 						return true;
 					}
@@ -224,6 +231,43 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		String templatename = filepath.substring(0, dot);
 		String templatecontent = Files.read(file, encoding);
 		return new Template().setName(templatename).setContent(templatecontent).setEncode(encoding);
+	}
+
+	protected void replaceTemplateContent(Conf conf, Template template, File[] files) {
+
+		String templateContent = template.getContent();
+		List<String> resources = RichHtmlHelper.populateStylesheets(templateContent);
+		List<String> javascripts = RichHtmlHelper.populateJavascripts(templateContent);
+		List<String> photos = RichHtmlHelper.populatePhotos(templateContent);
+
+		resources.addAll(javascripts);
+		resources.addAll(photos);
+
+		replaceResourcePaths(conf, template, files, resources);
+
+	}
+
+	private void replaceResourcePaths(final Conf conf, final Template template, final File[] files, final List<String> resources) {
+
+		Lang.each(files, new Each<File>() {
+
+			@Override
+			public void invoke(int index, File which) {
+				String filepath = Files.asUnix(Files.canonical(which));
+
+				for (String url : resources) {
+					if (!filepath.endsWith(Files.asUnix(url))) {
+						continue;
+					}
+
+					String relativePath = StringUtils.substringAfter(filepath, Files.asUnix(conf.getRootPath()));
+					relativePath = Files.asUnix(Files.join(conf.getContext(), relativePath));
+					String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
+					template.setContent(content);
+				}
+			}
+
+		});
 	}
 
 	/**

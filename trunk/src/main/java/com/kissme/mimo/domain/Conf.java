@@ -40,6 +40,7 @@ public class Conf implements Serializable {
 		return (Conf) Lang.clone(DEFAULT);
 	}
 
+	private String context;
 	private String rootPath;
 	private String templatePath;
 	private String resourcePath;
@@ -51,6 +52,15 @@ public class Conf implements Serializable {
 	private String photoPath;
 	private String allowedPhotoTypes;
 	private String recycleResourcePath;
+
+	public String getContext() {
+		return context;
+	}
+
+	public Conf setContext(String context) {
+		this.context = context;
+		return this;
+	}
 
 	public String getRootPath() {
 		return rootPath;
