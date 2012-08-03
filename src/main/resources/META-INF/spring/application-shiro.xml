@@ -36,9 +36,11 @@
 	            /channel/*/edit/* = authc,perms[channel:edit]
 	            /channel/*/delete/* = authc,perms[channel:delete]
 	            /channel/delete/* = authc,perms[channel:delete]
-	            
+					            
+	            /**/*.ftl* = authc
 	            /template/list/* = authc,perms[template:list]
 	            /template/create/* = authc,perms[template:create]
+	            /template/upload/* = authc,perms[template:create]
 	            /template/*/edit/* = authc,perms[template:edit]
 	            /template/generate/* = authc,perms[template:edit]
 	            /template/*/delete/* = authc,perms[template:delete]
@@ -70,7 +72,7 @@
 	            /article-comment/*/delete/* = authc,perms[article-comment:delete]
 	            /article-comment/delete/* = authc,perms[article-comment:delete]
 					            
-	            # for ueditor upload
+				# for ueditor upload
 	            /**/up.jsp* = authc,perms[photo-resource:upload]
 	            /photo-resource/list/* = authc,perms[photo-resource:list]
 	            /photo-resource/upload/* = authc,perms[photo-resource:upload]
