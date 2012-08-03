@@ -12,7 +12,7 @@
  <!--content start-->
 <div class="content">
 <div class="table">
-<div class="contentNav"><h1>模板管理</h1></div>
+<div class="contentNav"><h1>上传模版</h1></div>
  <div class="tips"><img src="${ctx}/resources/img/tips.gif" align="left" />&nbsp;所有带有<span class="red" style="color: red;" >*</span>为必填项</div>
 <div class="info border">
 
@@ -32,15 +32,6 @@
 </td>
 </tr>
 <tr>
-<td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>文件编码：</td>
-<td colspan="2">
-	<select name="fencoding" >
-		<option label="UTF-8" value="UTF-8"/>
-		<option label="GBK" value="GBK"/>
-	</select>
-</td>
-</tr>
-<tr>
 <td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>内容：</td>
 <td colspan="2">
 	<input id="ftl" type="checkbox" name="suffixs" value="ftl" checked="checked" />
@@ -51,6 +42,13 @@
 	<label for="htm">&nbsp;htm&nbsp;</label>
 	<input id="txt" type="checkbox" name="suffixs" value="txt"/>
 	<label for="txt">&nbsp;txt&nbsp;</label>
+</td>
+</tr>
+<tr>
+<td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >注意事项：</span></td>
+<td colspan="2">
+	<textarea rows="5" cols="80" readonly="readonly">1：windows平台下，zip压缩文件默认为GBK编码。2：请确保压缩包下所有可读文件编码为UTF-8编码，否则会出现乱码。3：linux平台下区分大小写，请规范路径，以免因大小写问题而不能访问。
+	</textarea>
 </td>
 </tr>
 </tbody>
