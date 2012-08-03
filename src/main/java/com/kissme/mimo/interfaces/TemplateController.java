@@ -157,7 +157,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 					Template template = convertToTemplate(templatedir, file);
 					replaceTemplateContent(conf, template, resourceFiles);
-
+					
 					Template existTemplate = templateService.lazyGetByName(template.getName());
 					if (null == existTemplate) {
 						template.selfAdjusting(conf).create();

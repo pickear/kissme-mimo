@@ -1,6 +1,7 @@
 package com.kissme.mimo.domain.channel;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.Size;
 
@@ -145,7 +146,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	 * 
 	 * @return
 	 */
-	public List<String> getPhotos() {
+	public Set<String> getPhotos() {
 		return RichHtmlHelper.populatePhotos(getAbout());
 	}
 
@@ -155,7 +156,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	 */
 	public String getFirstPhoto() {
 		if (isNotEmptyPhotos()) {
-			return getPhotos().get(0);
+			return getPhotos().iterator().next();
 		}
 
 		return "";
@@ -173,7 +174,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	 * 
 	 * @return
 	 */
-	public List<String> getFlashes() {
+	public Set<String> getFlashes() {
 		return RichHtmlHelper.populateFlashes(getAbout());
 	}
 
@@ -183,7 +184,7 @@ public class Channel extends AbstractLifecycleAwareObject<Channel> {
 	 */
 	public String getFirstFlash() {
 		if (isNotEmptyFlashes()) {
-			return getFlashes().get(0);
+			return getFlashes().iterator().next();
 		}
 
 		return "";

@@ -1,6 +1,7 @@
 package com.kissme.mimo.domain.article;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.Size;
 
@@ -183,7 +184,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	 * 
 	 * @return
 	 */
-	public List<String> getPhotos() {
+	public Set<String> getPhotos() {
 		return RichHtmlHelper.populatePhotos(getContent());
 	}
 
@@ -193,7 +194,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	 */
 	public String getFirstPhoto() {
 		if (isNotEmptyPhotos()) {
-			return getPhotos().get(0);
+			return getPhotos().iterator().next();
 		}
 
 		return "";
@@ -211,7 +212,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	 * 
 	 * @return
 	 */
-	public List<String> getFlashes() {
+	public Set<String> getFlashes() {
 		return RichHtmlHelper.populateFlashes(getContent());
 	}
 
@@ -221,7 +222,7 @@ public class Article extends AbstractLifecycleAwareObject<Article> {
 	 */
 	public String getFirstFlash() {
 		if (isNotEmptyFlashes()) {
-			return getFlashes().get(0);
+			return getFlashes().iterator().next();
 		}
 
 		return "";
