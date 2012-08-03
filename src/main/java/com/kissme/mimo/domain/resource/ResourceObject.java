@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.kissme.core.filecommand.ZipCompressFileCommand;
+import com.kissme.core.filecommand.ZipFileCommand;
 import com.kissme.lang.Files;
 import com.kissme.lang.Lang;
 import com.kissme.lang.file.DeleteFileCommand;
@@ -155,7 +155,7 @@ public class ResourceObject {
 
 			if (isDirectory()) {
 				File temp = File.createTempFile("temp", ".zip");
-				FileCommand zipCompress = new ZipCompressFileCommand(new File(this.fullPath), temp, "utf-8");
+				FileCommand zipCompress = new ZipFileCommand(new File(this.fullPath), temp, "utf-8");
 				FileCommand writeResponse = new WriteFileToCommand(temp, out, false);
 				FileCommand release = new DeleteFileCommand(temp);
 				new FileCommandInvoker().command(zipCompress).command(writeResponse).command(release).invoke();

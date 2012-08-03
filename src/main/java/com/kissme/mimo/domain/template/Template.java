@@ -96,6 +96,11 @@ public class Template extends AbstractLifecycleAwareObject<Template> {
 	}
 
 	public Template generate() {
+
+		if (StringUtils.isNotBlank(this.fullPrePath)) {
+			Files.delete(this.fullPrePath);
+		}
+
 		Files.write(new File(this.fullPath), getContent(), getEncode());
 		return this;
 	}

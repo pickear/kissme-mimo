@@ -32,6 +32,16 @@ public class TemplateServiceImpl extends LifecycleEventHandler implements Templa
 	}
 
 	@Override
+	public Template getByName(String name) {
+		return templateRepository.getByName(name);
+	}
+
+	@Override
+	public Template lazyGetByName(String name) {
+		return templateRepository.lazyGetByName(name);
+	}
+
+	@Override
 	public List<Template> query(Object object) {
 		return templateRepository.query(object);
 	}

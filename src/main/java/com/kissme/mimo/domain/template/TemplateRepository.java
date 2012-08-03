@@ -7,7 +7,7 @@ import com.kissme.core.orm.Page;
 /**
  * 
  * @author loudyn
- *
+ * 
  */
 public interface TemplateRepository {
 
@@ -20,17 +20,32 @@ public interface TemplateRepository {
 
 	/**
 	 * 
+	 * @param name
+	 * @return
+	 */
+	Template getByName(String name);
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	Template lazyGetByName(String name);
+
+	/**
+	 * 
 	 * @param object
 	 * @return
 	 */
 	List<Template> query(Object object);
-	
+
 	/**
 	 * 
 	 * @param object
 	 * @return
 	 */
 	List<Template> lazyQuery(Object object);
+
 	/**
 	 * 
 	 * @param page

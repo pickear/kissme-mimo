@@ -8,7 +8,7 @@ import com.kissme.mimo.domain.template.Template;
 /**
  * 
  * @author loudyn
- *
+ * 
  */
 public interface TemplateService {
 
@@ -18,6 +18,20 @@ public interface TemplateService {
 	 * @return
 	 */
 	Template get(String id);
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	Template getByName(String name);
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	Template lazyGetByName(String name);
 
 	/**
 	 * 
