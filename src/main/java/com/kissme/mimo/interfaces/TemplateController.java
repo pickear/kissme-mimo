@@ -8,6 +8,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -227,18 +228,18 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 			throw Lang.impossiable();
 		}
 
-		String templatename = filepath.substring(0, dot);
+		String templateName = filepath.substring(0, dot);
 		// only accept utf-8
-		String templatecontent = Files.read(file, "UTF-8");
-		return new Template().setName(templatename).setContent(templatecontent).setEncode("UTF-8");
+		String templateContent = Files.read(file, "UTF-8");
+		return new Template().setName(templateName).setContent(templateContent).setEncode("UTF-8");
 	}
 
 	protected void replaceTemplateContent(Conf conf, Template template, File[] files) {
 
 		String templateContent = template.getContent();
-		List<String> resources = RichHtmlHelper.populateStylesheets(templateContent);
-		List<String> javascripts = RichHtmlHelper.populateJavascripts(templateContent);
-		List<String> photos = RichHtmlHelper.populatePhotos(templateContent);
+		Set<String> resources = RichHtmlHelper.populateStylesheets(templateContent);
+		Set<String> javascripts = RichHtmlHelper.populateJavascripts(templateContent);
+		Set<String> photos = RichHtmlHelper.populatePhotos(templateContent);
 
 		resources.addAll(javascripts);
 		resources.addAll(photos);
@@ -247,7 +248,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	}
 
-	private void replaceResourcePaths(final Conf conf, final Template template, final File[] files, final List<String> resources) {
+	private void replaceResourcePaths(final Conf conf, final Template template, final File[] files, final Set<String> resources) {
 
 		Lang.each(files, new Each<File>() {
 
@@ -256,12 +257,14 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				String filepath = Files.asUnix(Files.canonical(which));
 
 				for (String url : resources) {
+					
 					if (!filepath.endsWith(Files.asUnix(url))) {
 						continue;
 					}
-
+					
 					String relativePath = StringUtils.substringAfter(filepath, Files.asUnix(conf.getRootPath()));
 					relativePath = Files.asUnix(Files.join("/", conf.getContext(), relativePath));
+					
 					String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
 					template.setContent(content);
 				}
