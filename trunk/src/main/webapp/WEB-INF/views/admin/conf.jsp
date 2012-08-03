@@ -26,6 +26,7 @@
 </shiro:hasPermission>
 <shiro:hasPermission name="template:create">
 <li><a href="${ctx}/template/create/" target="right"><span class="allIco ico15"></span>创建模版</a></li>
+<li><a href="${ctx}/template/upload/" target="right"><span class="allIco ico15"></span>上传模版</a></li>
 </shiro:hasPermission>
 <shiro:hasPermission name="article:list">
 <li><a href="${ctx}/article/list/offline/" target="right"><span class="allIco ico15"></span>文章回收站</a></li>
