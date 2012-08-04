@@ -32,7 +32,7 @@
 </td>
 </tr>
 <tr>
-<td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>内容：</td>
+<td width="150" align="right" nowrap="nowrap"><span class="red" style="color: red;" >*</span>模版文件后缀：</td>
 <td colspan="2">
 	<input id="ftl" type="checkbox" name="suffixs" value="ftl" checked="checked" />
 	<label for="ftl">&nbsp;ftl&nbsp;</label>
