@@ -2,6 +2,8 @@ package com.kissme.mimo.domain;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.kissme.lang.Lang;
 import com.kissme.mimo.domain.template.Template;
 import com.kissme.mimo.domain.template.TemplateHelper;
@@ -65,6 +67,10 @@ public final class HomeConf implements Serializable {
 	public HomeConf setTemplate(Template template) {
 		this.template = template;
 		return this;
+	}
+
+	public boolean hasTemplatePath() {
+		return StringUtils.isNotBlank(getTemplatePath());
 	}
 
 	public String getTemplatePath() {
