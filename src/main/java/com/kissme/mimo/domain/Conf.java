@@ -22,7 +22,6 @@ public class Conf implements Serializable {
 	private static final Conf DEFAULT = new Conf().setTemplatePath("resources/front/template")
 													.setResourcePath("resources")
 													.setSecurityResourcePath("WEB-INF")
-													.setRecycleResourcePath("recycle-resource")
 													.setAttachmentPath("attachments")
 													.setPhotoPath("resources/photos")
 													.setAllowedPhotoTypes("jpg,jpeg,bmp,gif,png,ico")
@@ -51,7 +50,6 @@ public class Conf implements Serializable {
 	private String attachmentPath;
 	private String photoPath;
 	private String allowedPhotoTypes;
-	private String recycleResourcePath;
 
 	public String getContext() {
 		return context;
@@ -95,15 +93,6 @@ public class Conf implements Serializable {
 
 	public Conf setSecurityResourcePath(String securityResourcePath) {
 		this.securityResourcePath = securityResourcePath;
-		return this;
-	}
-
-	public String getRecycleResourcePath() {
-		return this.recycleResourcePath;
-	}
-
-	public Conf setRecycleResourcePath(String recycleResourcePath) {
-		this.recycleResourcePath = recycleResourcePath;
 		return this;
 	}
 
