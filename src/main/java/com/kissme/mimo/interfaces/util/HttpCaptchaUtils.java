@@ -16,7 +16,7 @@ import com.kissme.mimo.interfaces.exception.InvalidCaptchaException;
  */
 public final class HttpCaptchaUtils {
 
-	private static final String CAPTCHA_ATTR = "com.mimo.cms.captcha";
+	private static final String CAPTCHA_ATTR = "com.kismme.mimo.captcha";
 
 	/**
 	 * 

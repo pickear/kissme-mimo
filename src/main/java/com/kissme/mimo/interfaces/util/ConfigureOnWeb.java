@@ -37,13 +37,12 @@ public final class ConfigureOnWeb implements ServletContextAware {
 		String templatePath = Files.join(getContextRealPath(), conf.getTemplatePath());
 		String resourcePath = Files.join(getContextRealPath(), conf.getResourcePath());
 		String securityResourcePath = Files.join(getContextRealPath(), conf.getSecurityResourcePath());
-		String recycleResourcePath = Files.join(getContextRealPath(), conf.getRecycleResourcePath());
 		String attachmentPath = Files.join(getContextRealPath(), conf.getAttachmentPath());
 		String photoPath = Files.join(getContextRealPath(), conf.getPhotoPath());
 
 		conf.setContext(getContextPath()).setAttachmentPath(attachmentPath).setPhotoPath(photoPath);
-		conf.setRecycleResourcePath(recycleResourcePath).setSecurityResourcePath(securityResourcePath);
-		return conf.setTemplatePath(templatePath).setResourcePath(resourcePath).setRootPath(getContextRealPath());
+		conf.setSecurityResourcePath(securityResourcePath).setTemplatePath(templatePath);
+		return conf.setResourcePath(resourcePath).setRootPath(getContextRealPath());
 	}
 
 	private String getContextRealPath() {
