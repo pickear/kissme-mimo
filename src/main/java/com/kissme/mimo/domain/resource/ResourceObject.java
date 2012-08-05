@@ -155,10 +155,9 @@ public class ResourceObject {
 
 			if (isDirectory()) {
 				File temp = File.createTempFile("temp", ".zip");
-				FileCommand zipCompress = new ZipFileCommand(new File(this.fullPath), temp, "utf-8");
-				FileCommand writeResponse = new WriteFileToCommand(temp, out, false);
-				FileCommand release = new DeleteFileCommand(temp);
-				new FileCommandInvoker().command(zipCompress).command(writeResponse).command(release).invoke();
+				FileCommand zip = new ZipFileCommand(new File(this.fullPath), temp, "utf-8");
+				FileCommand write = new WriteFileToCommand(temp, out, false);
+				new FileCommandInvoker().command(zip).command(write).invoke();
 				return this;
 			}
 
