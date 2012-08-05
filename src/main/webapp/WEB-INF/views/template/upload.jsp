@@ -36,7 +36,7 @@
 <td colspan="2">
 	<input id="ftl" type="checkbox" name="suffixs" value="ftl" checked="checked" />
 	<label for="ftl">&nbsp;ftl&nbsp;</label>
-	<input id="html" type="checkbox" name="suffixs" value="html"/>
+	<input id="html" type="checkbox" name="suffixs" value="html" checked="checked"/>
 	<label for="html">&nbsp;html&nbsp;</label>
 	<input id="htm" type="checkbox" name="suffixs" value="htm"/>
 	<label for="htm">&nbsp;htm&nbsp;</label>
