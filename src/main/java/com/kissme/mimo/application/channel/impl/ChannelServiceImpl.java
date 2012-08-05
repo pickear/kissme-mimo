@@ -34,11 +34,6 @@ public class ChannelServiceImpl extends LifecycleEventHandler implements Channel
 		this.channelRepository = channelRepository;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.mimo.cms.application.channel.ChannelService#queryUniqueByPath(java.lang.String)
-	 */
 	@Override
 	public Channel queryUniqueByPath(String path) {
 		return channelRepository.queryUniqueByPath(path);
