@@ -85,7 +85,7 @@ public class ResourceController extends ControllerSupport {
 	 */
 	@RequestMapping(value = "/upload/", method = RequestMethod.POST)
 	public void upload(@RequestParam("file") MultipartFile file, @RequestParam(value = "pathname", required = false) String pathname,
-			HttpServletResponse response) {
+						HttpServletResponse response) {
 
 		try {
 

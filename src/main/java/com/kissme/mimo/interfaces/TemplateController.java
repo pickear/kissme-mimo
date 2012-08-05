@@ -134,7 +134,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@RequestMapping(value = "/upload/", method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, @RequestParam("encoding") final String encoding,
-			@RequestParam("suffixs") final String[] suffixs) {
+							@RequestParam("suffixs") final String[] suffixs) {
 
 		try {
 
