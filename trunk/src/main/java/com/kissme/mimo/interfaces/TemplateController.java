@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.ImmutableList;
 import com.kissme.core.filecommand.UnzipFileCommand;
 import com.kissme.core.helper.RichHtmlHelper;
 import com.kissme.core.orm.Page;
@@ -54,6 +55,7 @@ import com.kissme.mimo.interfaces.util.JsonMessage;
 public class TemplateController extends CrudControllerSupport<String, Template> {
 
 	private static final String REDIRECT_LIST = "redirect:/template/list/";
+	private static final List<String> SUPPORT_SUFFIXS = ImmutableList.of("ftl", "html", "htm", "txt");
 
 	@Autowired
 	private ConfigureOnWeb confOnWeb;
@@ -132,12 +134,13 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@RequestMapping(value = "/upload/", method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, @RequestParam("encoding") final String encoding,
-							@RequestParam("suffixs") final String[] suffixs) {
+			@RequestParam("suffixs") final String[] suffixs) {
 
 		try {
 
 			byte[] content = file.getBytes();
 			checkZipFileType(content);
+			checkSuffixs(suffixs);
 
 			File temp = File.createTempFile("template", ".zip");
 			final Conf conf = confOnWeb.wrap(confsRepository.getConf());
@@ -158,7 +161,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 					Template template = convertToTemplate(templatedir, file);
 					replaceTemplateContent(conf, template, resourceFiles);
-					
+
 					Template existTemplate = templateService.lazyGetByName(template.getName());
 					if (null == existTemplate) {
 						template.selfAdjusting(conf).create();
@@ -183,6 +186,12 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	private void checkZipFileType(byte[] data) {
 		Preconditions.isTrue(FileType.ZIP == Files.guessType(data));
+	}
+
+	private void checkSuffixs(String[] suffixs) {
+		if (!SUPPORT_SUFFIXS.containsAll(ImmutableList.copyOf(suffixs))) {
+			throw new IllegalArgumentException("not supported template suffix");
+		}
 	}
 
 	private File[] listUploadFiles(final File templatedir, final String[] suffixs, final long current) {
@@ -259,14 +268,14 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				String filepath = Files.asUnix(Files.canonical(which));
 
 				for (String url : resources) {
-					
+
 					if (!filepath.endsWith(Files.asUnix(url))) {
 						continue;
 					}
-					
+
 					String relativePath = StringUtils.substringAfter(filepath, Files.asUnix(conf.getRootPath()));
 					relativePath = Files.asUnix(Files.join("/", conf.getContext(), relativePath));
-					
+
 					String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
 					template.setContent(content);
 				}
