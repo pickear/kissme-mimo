@@ -33,6 +33,7 @@ import com.kissme.lang.Files;
 import com.kissme.lang.Files.FileType;
 import com.kissme.lang.Lang;
 import com.kissme.lang.Preconditions;
+import com.kissme.lang.file.DeleteFileCommand;
 import com.kissme.lang.file.FileCommandInvoker;
 import com.kissme.lang.file.WriteBytesToFileCommand;
 import com.kissme.mimo.application.template.TemplateService;
@@ -231,6 +232,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		String templateName = filepath.substring(0, dot);
 		// only accept utf-8
 		String templateContent = Files.read(file, "UTF-8");
+		new DeleteFileCommand(file).execute();
 		return new Template().setName(templateName).setContent(templateContent).setEncode("UTF-8");
 	}
 
