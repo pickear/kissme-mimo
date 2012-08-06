@@ -89,8 +89,9 @@ public class Template extends AbstractLifecycleAwareObject<Template> {
 		}
 
 		String relativePath = StringUtils.substringAfter(conf.getTemplatePath(), conf.getRootPath());
-		setPath(String.format("%s/%s.ftl", relativePath, getName()));
-		this.fullPath = Files.join(conf.getRootPath(), getPath());
+		String path = Files.asUnix(Files.join("/", String.format("%s/%s.ftl", relativePath, getName())));
+		setPath(path);
+		this.fullPath = Files.asUnix(Files.join("/", conf.getRootPath(), getPath()));
 
 		return this;
 	}
