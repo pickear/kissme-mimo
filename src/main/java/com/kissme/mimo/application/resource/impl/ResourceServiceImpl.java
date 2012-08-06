@@ -120,12 +120,14 @@ public class ResourceServiceImpl implements ResourceService {
 
 		String fileCanonicalPath = Files.canonical(file);
 		String relativePath = StringUtils.substringAfter(fileCanonicalPath, getResourcePath(conf));
+		relativePath = Files.asUnix(Files.join("/", relativePath));
 		String fullRelativePath = StringUtils.substringAfter(fileCanonicalPath, conf.getRootPath());
+		fullRelativePath = Files.asUnix(Files.join("/", fullRelativePath));
 
 		boolean precondition = relativePath.length() < fileCanonicalPath.length();
 		Preconditions.isTrue(precondition, new RuntimeException("Can't get the ResourceBean path!"));
-		
-		return ResourceObjectFactory.newResourceObject(file).setFullRelativePath(Files.asUnix(fullRelativePath)).setPath(Files.asUnix(relativePath));
+
+		return ResourceObjectFactory.newResourceObject(file).setFullRelativePath(fullRelativePath).setPath(relativePath);
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import com.kissme.core.filecommand.ZipFileCommand;
 import com.kissme.lang.Files;
 import com.kissme.lang.Lang;
-import com.kissme.lang.file.DeleteFileCommand;
 import com.kissme.lang.file.FileCommand;
 import com.kissme.lang.file.FileCommandInvoker;
 import com.kissme.lang.file.WriteFileToCommand;
@@ -120,7 +119,7 @@ public class ResourceObject {
 	}
 
 	public ResourceObject selfAdjusting(Conf conf) {
-		this.fullPath = Files.join(getResourcePath(conf), getPath());
+		this.fullPath = Files.asUnix(Files.join("/", getResourcePath(conf), getPath()));
 		return this;
 	}
 
