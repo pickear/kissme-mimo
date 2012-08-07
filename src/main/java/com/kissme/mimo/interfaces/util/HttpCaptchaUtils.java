@@ -35,6 +35,8 @@ public final class HttpCaptchaUtils {
 		if (null == captcha || !captcha.isCorrect(captchaString)) {
 			throw new InvalidCaptchaException("Wrong captcha!");
 		}
+
+		session.removeAttribute(CAPTCHA_ATTR);
 	}
 
 	/**
