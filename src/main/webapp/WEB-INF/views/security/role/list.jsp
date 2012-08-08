@@ -36,7 +36,7 @@
 <shiro:hasRole name="admin">
 <input class="tjbtn" id="del" type="button" value="删除" />
 </shiro:hasRole>
-<span class="dist">名称：</span><input name="params[name]" value="${page.params.name }" type="text" /><input class="tjbtn" type="submit" value="提交" />
+<span class="dist">名称：</span><input name="params[showName]" value="${page.params.showName }" type="text" /><input class="tjbtn" type="submit" value="提交" />
 </div>
 <p>${message.text }</p>
 <div class="rcd_td">
