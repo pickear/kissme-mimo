@@ -175,7 +175,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 			});
 
-			success("上传模版成功");
+			success(String.format("上传模版成功，成功解析【%s】个模版文件", templateFiles.length));
 		} catch (Exception e) {
 			error("上传模版失败，请核对数据（只支持zip压缩文件）重试");
 		}
@@ -208,9 +208,9 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 					return false;
 				}
 
-				String suffix = Files.suffix(pathname.getName());
+				String filename = pathname.getName().toLowerCase();
 				for (String support : suffixs) {
-					if (StringUtils.equalsIgnoreCase(support, suffix)) {
+					if (filename.endsWith(support.toLowerCase())) {
 						return true;
 					}
 				}
