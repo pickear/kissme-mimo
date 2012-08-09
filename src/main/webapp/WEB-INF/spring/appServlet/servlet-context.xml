@@ -17,12 +17,24 @@
 			<beans:bean class="com.kissme.mimo.interfaces.interceptor.MinotoringInterceptor" />
 		</interceptor>
 		<interceptor>
+			<mapping path="/**/create**" />
+			<beans:bean class="com.kissme.mimo.interfaces.interceptor.ReadWriteControllingDataSourceInterceptor" />
+		</interceptor>
+		<interceptor>
 			<mapping path="/**/edit**" />
 			<beans:bean class="com.kissme.mimo.interfaces.interceptor.MinotoringInterceptor" />
 		</interceptor>
 		<interceptor>
+			<mapping path="/**/edit**" />
+			<beans:bean class="com.kissme.mimo.interfaces.interceptor.ReadWriteControllingDataSourceInterceptor" />
+		</interceptor>
+		<interceptor>
 			<mapping path="/**/delete**" />
 			<beans:bean class="com.kissme.mimo.interfaces.interceptor.MinotoringInterceptor" />
+		</interceptor>
+		<interceptor>
+			<mapping path="/**/delete**" />
+			<beans:bean class="com.kissme.mimo.interfaces.interceptor.ReadWriteControllingDataSourceInterceptor" />
 		</interceptor>
 		<interceptor>
 			<mapping path="/**/upload**" />
