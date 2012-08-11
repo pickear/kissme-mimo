@@ -203,11 +203,11 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				if (pathname.isDirectory()) {
 					return true;
 				}
-
-				if (pathname.lastModified() < current) {
+				
+				if(Math.abs(pathname.lastModified() - current) > 3 * 60 * 1000){
 					return false;
 				}
-
+				
 				String filename = pathname.getName().toLowerCase();
 				for (String support : suffixs) {
 					if (filename.endsWith(support.toLowerCase())) {

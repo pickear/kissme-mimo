@@ -16,6 +16,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,8 @@ public class AdminController {
 	public static final int INVALID_CAPTCHA_ERROR_CODE = 8;
 	public static final int OTHER_ERROR_CODE = 16;
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	/**
 	 * not the login submit request,just return to login page.
 	 * 
@@ -56,6 +60,13 @@ public class AdminController {
 	@RequestMapping(value = "/login", method = POST)
 	public String login(HttpServletRequest request, HttpSession session) {
 
+		logger.debug("Handle login request with session[%s]", session.getId());
+		logger.debug("session[%s] create on %s,last access time is %s", new Object[] {
+				session.getId(),
+				session.getCreationTime(),
+				session.getLastAccessedTime()
+		});
+
 		Subject subject = SecurityUtils.getSubject();
 
 		// if it has authenticated,logout first
@@ -70,6 +81,7 @@ public class AdminController {
 
 			subject.login(token);
 		} catch (Exception e) {
+			logger.error("login occur exception.", e);
 			return "redirect:/login?code=" + translateException(e);
 		}
 
@@ -165,7 +177,7 @@ public class AdminController {
 	public String foot() {
 		return "admin/foot";
 	}
-	
+
 	/**
 	 * 
 	 * @param model
