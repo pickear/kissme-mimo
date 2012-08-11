@@ -60,13 +60,14 @@ public class AdminController {
 	@RequestMapping(value = "/login", method = POST)
 	public String login(HttpServletRequest request, HttpSession session) {
 
-		logger.debug("Handle login request with session[%s]", session.getId());
-		logger.debug("session[%s] create on %s,last access time is %s", new Object[] {
-				session.getId(),
-				session.getCreationTime(),
-				session.getLastAccessedTime()
-		});
-
+		logger.debug(String.format(
+									"Handle login request with session[id=%s,createOn=%s,lastAccessedOn=%s]", 
+									session.getId(),
+									session.getCreationTime(),
+									session.getLastAccessedTime()
+								)
+		);
+		
 		Subject subject = SecurityUtils.getSubject();
 
 		// if it has authenticated,logout first
