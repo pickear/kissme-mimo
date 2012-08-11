@@ -58,7 +58,7 @@
 		<property name="maxIdleTime" value="1800" />
 		<property name="maxStatements" value="1000" />
 		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
-		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleConnectionTestPeriod" value="8" />
 	</bean>
 	
 	<bean id="writeDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -75,7 +75,7 @@
 		<property name="maxIdleTime" value="1800" />
 		<property name="maxStatements" value="1000" />
 		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
-		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleConnectionTestPeriod" value="8" />
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
