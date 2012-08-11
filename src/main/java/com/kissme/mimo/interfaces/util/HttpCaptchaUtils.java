@@ -27,16 +27,22 @@ public final class HttpCaptchaUtils {
 
 		// captcha.isCorrect maybe cause NullPointException,so must check the captchaString first.
 		if (StringUtils.isBlank(captchaString)) {
-			throw new InvalidCaptchaException("Blank captcha!");
+			throw new InvalidCaptchaException("Blank captcha string!");
 		}
 
 		Preconditions.notNull(session, new InvalidCaptchaException("None session!"));
 		Captcha captcha = (Captcha) session.getAttribute(CAPTCHA_ATTR);
-		if (null == captcha || !captcha.isCorrect(captchaString)) {
-			throw new InvalidCaptchaException("Wrong captcha!");
+		if (null == captcha) {
+			throw new InvalidCaptchaException("Blank captcha in session!");
 		}
 
-		session.removeAttribute(CAPTCHA_ATTR);
+		if (!captcha.isCorrect(captchaString)) {
+			throw new InvalidCaptchaException("Bad captcha string");
+		}
+
+		synchronized (session) {
+			session.removeAttribute(CAPTCHA_ATTR);
+		}
 	}
 
 	/**
@@ -45,7 +51,9 @@ public final class HttpCaptchaUtils {
 	 * @param session
 	 */
 	public static void storeCaptcha(Captcha captcha, HttpSession session) {
-		session.setAttribute(CAPTCHA_ATTR, captcha);
+		synchronized (session) {
+			session.setAttribute(CAPTCHA_ATTR, captcha);
+		}
 	}
 
 	private HttpCaptchaUtils() {}
