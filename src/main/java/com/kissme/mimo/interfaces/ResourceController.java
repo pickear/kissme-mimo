@@ -186,7 +186,7 @@ public class ResourceController extends ControllerSupport {
 
 			Conf conf = confOnWeb.wrap(confsRepository.getConf());
 			ResourceObject bean = resourceService.get(conf, pathname);
-			if (null == bean || bean.isDirectory()) {
+			if (null == bean) {
 				throw new UnsupportedOperationException("Bad pathname !");
 			}
 
