@@ -89,6 +89,8 @@
 	            /security-resource/download/* = authc,perms[security-resource:download]
 	            /security-resource/delete/* = authc,perms[security-resource:delete]
 	            # more URL-to-FilterChain definitions here
+	            
+	            /** = anon
         	</value>
     	</property>
 	</bean>
