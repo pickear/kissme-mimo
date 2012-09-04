@@ -34,7 +34,13 @@ public class MinotoringInterceptor extends HandlerInterceptorAdapter {
 				MonitoringContext.set(context);
 			}
 
-			String username = SecurityUtils.getSubject().getPrincipal().toString();
+			String username = "anonymous";
+
+			Object principal = SecurityUtils.getSubject().getPrincipal();
+			if (null != principal) {
+				username = principal.toString();
+			}
+
 			String source = getRequestIp(request);
 			String target = request.getRequestURI();
 			context.setSource(source).setTarget(target).setActor(username);

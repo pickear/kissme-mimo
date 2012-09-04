@@ -113,11 +113,7 @@
     <td>
     	&nbsp;
 		<shiro:hasPermission name="photo-resource:delete">
-		<c:choose>
-			<c:when test="${not bean.directory }">
-				<a href="javascript:void(0);" id ="${bean.path }" class="del">删除</a>&nbsp;
-			</c:when>
-		</c:choose>
+			<a href="javascript:void(0);" id ="${bean.path }" class="del">删除</a>&nbsp;
 		</shiro:hasPermission>
 		<shiro:hasPermission name="photo-resource:download">
 			<a href="${ctx }/photo-resource/download/?pathname=${codec:urlEncode(bean.path)}" >下载</a>

@@ -171,7 +171,10 @@
 			self.status=#{params.status} 
 		</if>
 		<if test="params.channel != null and params.channel != ''">
-			and self.channel_id=#{params.channel}
+			and channel.id=#{params.channel}
+		</if>
+		<if test="params.fatherChannel != null and params.fatherChannel != ''">
+			and (channel.id=#{params.fatherChannel} or channel.father_id=#{params.fatherChannel}) 
 		</if>
 	</where>
 	<include refid="articleOrderBy"/> 
