@@ -179,6 +179,11 @@
 			<id>youboy</id>
 			<url>http://192.168.3.239:8081/nexus/content/repositories/thirdparty</url>
 		</repository>
+		
+		<repository>
+			<id>localhost</id>
+			<url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
+		</repository>
 
 		<repository>
 			<id>sonatype-snapshots</id>

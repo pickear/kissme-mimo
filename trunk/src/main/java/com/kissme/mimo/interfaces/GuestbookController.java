@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kissme.core.orm.Page;
 import com.kissme.core.web.Webs;
@@ -54,6 +55,7 @@ public class GuestbookController extends ControllerSupport {
 	}
 
 	@RequestMapping(value = "/create/", method = POST)
+	@ResponseBody
 	public Object create(@RequestHeader(value = "X-Requested-With", required = false) String requestedWith,
 							@RequestParam("captcha") String captcha,
 							@Valid Guestbook entity, BindingResult bindingResult,

@@ -7,6 +7,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 
@@ -152,7 +154,6 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 									.invoke();
 
 			final File[] templateFiles = listUploadFiles(templatedir, suffixs, current);
-			final File[] resourceFiles = listUploadFiles(templatedir, new String[] { "css", "js", "jpg", "jpeg", "ico", "png", "gif", "bmp" }, current);
 
 			Lang.each(templateFiles, new Each<File>() {
 
@@ -160,7 +161,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				public void invoke(int index, File file) {
 
 					Template template = convertToTemplate(templatedir, file);
-					replaceTemplateContent(conf, template, resourceFiles);
+					replaceTemplateContent(conf, template, file);
 
 					Template existTemplate = templateService.lazyGetByName(template.getName());
 					if (null == existTemplate) {
@@ -169,13 +170,15 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 					}
 
 					existTemplate.setEncode(template.getEncode())
-								 .setContent(template.getContent())
-								 .selfAdjusting(conf).modify();
+									.setContent(template.getContent())
+									.selfAdjusting(conf).modify();
+
+					new DeleteFileCommand(file).execute();
 				}
 
 			});
 
-			success(String.format("上传模版成功，成功解析【%s】个模版文件", templateFiles.length));
+			success(String.format("上传模版完毕，成功解析【%s】个模版文件", templateFiles.length));
 		} catch (Exception e) {
 			error("上传模版失败，请核对数据（只支持zip压缩文件）重试");
 		}
@@ -245,7 +248,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		return new Template().setName(templateName).setContent(templateContent).setEncode("UTF-8");
 	}
 
-	protected void replaceTemplateContent(Conf conf, Template template, File[] files) {
+	protected void replaceTemplateContent(Conf conf, Template template, File file) {
 
 		String templateContent = template.getContent();
 		Set<String> resources = RichHtmlHelper.populateStylesheets(templateContent);
@@ -255,33 +258,41 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		resources.addAll(javascripts);
 		resources.addAll(photos);
 
-		replaceResourcePaths(conf, template, files, resources);
+		replaceResourcePaths(conf, template, file, resources);
 
 	}
 
-	private void replaceResourcePaths(final Conf conf, final Template template, final File[] files, final Set<String> resources) {
+	private void replaceResourcePaths(final Conf conf, final Template template, final File file, final Set<String> resources) {
 
-		Lang.each(files, new Each<File>() {
+		String templateDirectory = Files.split(Files.canonical(file))[0];
+		for (String url : resources) {
 
-			@Override
-			public void invoke(int index, File which) {
-				String filepath = Files.asUnix(Files.canonical(which));
-
-				for (String url : resources) {
-
-					if (!filepath.endsWith(Files.asUnix(url))) {
-						continue;
-					}
-
-					String relativePath = StringUtils.substringAfter(filepath, Files.asUnix(conf.getRootPath()));
-					relativePath = Files.asUnix(Files.join("/", conf.getContext(), relativePath));
-
-					String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
-					template.setContent(content);
-				}
+			// ingore el expression path
+			if (url.indexOf("$") != -1) {
+				continue;
 			}
 
-		});
+			Deque<String> stack = new ArrayDeque<String>();
+			for (String path : StringUtils.split(Files.asUnix(templateDirectory), Files.UNIX_SEPERATOR)) {
+				stack.offerLast(path);
+			}
+
+			for (String item : StringUtils.split(Files.asUnix(url), Files.UNIX_SEPERATOR)) {
+				if (StringUtils.equals("..", item)) {
+					stack.pollLast();
+					continue;
+				}
+
+				stack.offerLast(item);
+			}
+
+			String resourcePath = StringUtils.join(stack.iterator(), Files.UNIX_SEPERATOR);
+			String relativePath = StringUtils.substringAfter(Files.asUnix(resourcePath), Files.asUnix(conf.getRootPath()));
+			relativePath = Files.asUnix(Files.join("/", conf.getContext(), relativePath));
+
+			String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
+			template.setContent(content);
+		}
 	}
 
 	/**
