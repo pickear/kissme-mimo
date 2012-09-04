@@ -136,7 +136,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 	@RequestMapping(value = "/upload/", method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, @RequestParam("encoding") final String encoding,
-							@RequestParam("suffixs") final String[] suffixs) {
+			@RequestParam("suffixs") final String[] suffixs) {
 
 		try {
 
@@ -206,11 +206,11 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 				if (pathname.isDirectory()) {
 					return true;
 				}
-				
-				if(Math.abs(pathname.lastModified() - current) > 3 * 60 * 1000){
+
+				if (Math.abs(pathname.lastModified() - current) > 3 * 60 * 1000) {
 					return false;
 				}
-				
+
 				String filename = pathname.getName().toLowerCase();
 				for (String support : suffixs) {
 					if (filename.endsWith(support.toLowerCase())) {
@@ -268,7 +268,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		for (String url : resources) {
 
 			// ingore el expression path
-			if (url.indexOf("$") != -1) {
+			if (url.matches(".*\\$\\{.+\\}.*")) {
 				continue;
 			}
 
