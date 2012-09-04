@@ -180,7 +180,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 
 			success(String.format("上传模版完毕，成功解析【%s】个模版文件", templateFiles.length));
 		} catch (Exception e) {
-			error("上传模版失败，请核对数据（只支持zip压缩文件）重试");
+			error("上传模版失败，" + e.getMessage());
 		}
 
 		return REDIRECT_LIST;
