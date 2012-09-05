@@ -47,7 +47,7 @@ public class MybatisShiroRealm extends AuthorizingRealm {
 		try {
 
 			User user = userRepository.queryUniqueByUsername(username);
-			checkUser(user,username);
+			checkUser(user, username);
 
 			Set<String> roleNames = user.getRoleNames();
 			Set<String> permissions = user.getPermissions();
@@ -55,8 +55,16 @@ public class MybatisShiroRealm extends AuthorizingRealm {
 			info.setStringPermissions(permissions);
 			return info;
 		} catch (Exception e) {
-			throw translateException(e);
+			throw translateAuthorizationException(e);
 		}
+	}
+
+	private AuthorizationException translateAuthorizationException(Exception e) {
+		if (e instanceof AuthorizationException) {
+			return (AuthorizationException) e;
+		}
+
+		return new AuthorizationException(e);
 	}
 
 	private void checkUser(User user, String username) {
@@ -69,8 +77,8 @@ public class MybatisShiroRealm extends AuthorizingRealm {
 		}
 	}
 
-	private AuthenticationException translateException(Exception e) {
-		if (AuthenticationException.class.isAssignableFrom(e.getClass())) {
+	private AuthenticationException translateAuthenticationException(Exception e) {
+		if (e instanceof AuthenticationException) {
 			return (AuthenticationException) e;
 		}
 
@@ -80,8 +88,7 @@ public class MybatisShiroRealm extends AuthorizingRealm {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)
+	 * @see org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
@@ -99,7 +106,7 @@ public class MybatisShiroRealm extends AuthorizingRealm {
 
 			return buildAuthenticationInfo(username, user.getPassword().toCharArray());
 		} catch (Exception e) {
-			throw translateException(e);
+			throw translateAuthenticationException(e);
 		}
 	}
 
