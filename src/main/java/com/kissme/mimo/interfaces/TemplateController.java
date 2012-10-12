@@ -244,7 +244,6 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		String templateName = filepath.substring(0, dot);
 		// only accept utf-8
 		String templateContent = Files.read(file, "UTF-8");
-		new DeleteFileCommand(file).execute();
 		return new Template().setName(templateName).setContent(templateContent).setEncode("UTF-8");
 	}
 
@@ -268,7 +267,7 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 		for (String url : resources) {
 
 			// ingore el expression path
-			if (url.matches(".*\\$\\{.+\\}.*")) {
+			if (isLikeEl(url)) {
 				continue;
 			}
 
@@ -293,6 +292,10 @@ public class TemplateController extends CrudControllerSupport<String, Template> 
 			String content = TemplateHelper.replaceResources(template.getContent(), url, relativePath);
 			template.setContent(content);
 		}
+	}
+
+	private boolean isLikeEl(String url) {
+		return url.matches(".*\\$\\{.+\\}.*");
 	}
 
 	/**
