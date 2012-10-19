@@ -25,7 +25,7 @@ public class MinotoringInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 		// get method means just read,ingore it
-		if (!equalsIgnoreCase("GET", request.getMethod())) {
+		if (isNotReadOnlyRequest(request)) {
 
 			MonitoringContext context = MonitoringContext.get();
 			if (null == context) {
@@ -49,12 +49,17 @@ public class MinotoringInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-		MonitoringContext.set(null);
+	private boolean isNotReadOnlyRequest(HttpServletRequest request) {
+		return !equalsIgnoreCase("GET", request.getMethod());
 	}
 
 	private String getRequestIp(HttpServletRequest request) {
 		return Webs.requestIP(request);
 	}
+
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+		MonitoringContext.set(null);
+	}
+
 }
