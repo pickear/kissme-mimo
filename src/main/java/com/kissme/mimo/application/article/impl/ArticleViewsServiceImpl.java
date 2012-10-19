@@ -35,7 +35,7 @@ public class ArticleViewsServiceImpl implements ArticleViewsService {
 	@Override
 	public void oneMoreView(final Article entity) {
 		// is transaction works ? there must be something wrong in here
-		/**
+		/*
 		 * @see org.mybatis.spring.SqlSessionTemplate.SqlSessionInterceptor (line 351 ~ 353)
 		 */
 		executor.execute(new Runnable() {
