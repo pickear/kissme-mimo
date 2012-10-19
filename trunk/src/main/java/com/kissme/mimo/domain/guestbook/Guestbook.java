@@ -71,7 +71,7 @@ public class Guestbook extends AbstractLifecycleAwareObject<Guestbook> {
 		return this;
 	}
 
-	public boolean isAdmin() {
+	public boolean isPostByAdmin() {
 		return admin;
 	}
 
