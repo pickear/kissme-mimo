@@ -80,7 +80,7 @@ public class MonitoringRecord extends AbstractLifecycleAwareObject<MonitoringRec
 
 	@Override
 	protected boolean beforeModify() {
-		throw new UnsupportedOperationException("MonitoringRecord didn't supported delete!");
+		throw new UnsupportedOperationException("MonitoringRecord didn't supported modify!");
 	}
 
 	@Override
