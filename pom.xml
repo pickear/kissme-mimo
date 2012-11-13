@@ -13,6 +13,7 @@
 		<org.aspectj-version>1.6.9</org.aspectj-version>
 		<org.slf4j-version>1.5.10</org.slf4j-version>
 		<org.apache.shiro-version>1.2.0</org.apache.shiro-version>
+		<local.repository.path>file://${project.basedir}/lib/</local.repository.path>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,6 +46,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1.2</version>
@@ -67,7 +74,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.2.0.Final</version>
 		</dependency>
-		
+
 		<!-- shiro dependency -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -176,13 +183,8 @@
 		</repository>
 
 		<repository>
-			<id>youboy</id>
-			<url>http://192.168.3.239:8081/nexus/content/repositories/thirdparty</url>
-		</repository>
-		
-		<repository>
-			<id>localhost</id>
-			<url>http://localhost:8081/nexus/content/repositories/thirdparty/</url>
+			<id>basedir</id>
+			<url>${local.repository.path}</url>
 		</repository>
 
 		<repository>
