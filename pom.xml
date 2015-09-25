@@ -181,12 +181,12 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
+		<!--
 		<repository>
 			<id>basedir</id>
 			<url>${local.repository.path}</url>
 		</repository>
-
+                 -->
 		<repository>
 			<id>sonatype-snapshots</id>
 			<name>Sonatype Snapshots Repository</name>
